@@ -13,7 +13,11 @@ export class Vector {
     add(v: Vector){
     return new Vector(this.x + v.x, this.y + v.y)
     }
+    addIn(v: Vector){
+        this.x += v.x
+        this.y += v.y
 
+    }
     subtract(v: Vector){
     return new Vector(this.x - v.x , this.y - v.y)
     }

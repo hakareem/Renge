@@ -14,6 +14,9 @@ export class Game {
     springs:Spring[]=[]
     masses:Mass[]=[]
 
+    downMass:Mass|null= null
+    upMass:Mass|null= null 
+
     constructor(width:number,height:number){
         this.canvas = document.createElement('canvas')
         this.ctx = this.canvas.getContext('2d')!
@@ -35,7 +38,14 @@ export class Game {
         for (let i=0;i<this.masses.length;i++){
             this.masses[i].draw(this)
             this.masses[i].move()
-            this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
+            // this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
+
+
+        }
+    
+        for (let i=0; i <this.springs.length;i++){
+            this.springs[i].drawSpring(this)
+            this.springs[i].updateLength()
 
         }
         this.ctx.stroke()
@@ -54,15 +64,20 @@ export class Game {
         // this.mouseMove(e.clientX,e.clientY)
         this.mouseDownPoint = new Vector(e.clientX,e.clientY)
         this.isActive = true
-        this.masses.push( new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0)))
+        this.downMass = new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0))
+        this.masses.push(this.downMass)
+
        // mass.draw(this)
+       
     }
     mouseUp(e:MouseEvent){
         this.mouseUpPoint= new Vector(e.clientX,e.clientY)
         this.isActive = false
-        this.masses.push( new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0)))
-        //mass.draw(this)
+        this.upMass = new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0))
+        this.masses.push(this.upMass)
+        this.springs.push( new Spring(0.1, 200,this.downMass!,this.upMass))
 
+        //mass.draw(this)
         // this.ctx?.moveTo(this.mouseDownPoint.x,this.mouseDownPoint.y)
         // this.ctx!.lineTo(e.clientX,e.clientY)
         // this.ctx?.stroke()
