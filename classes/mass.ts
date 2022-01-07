@@ -1,5 +1,5 @@
 import { Vector } from "./vector.js";
-import { ctx } from "../script.js";
+import { Game } from "./game.js";
 
 
 export class Mass {
@@ -13,12 +13,12 @@ constructor(position: Vector, velocity: Vector, target: Vector){
  this.target = target
 }
 
-draw(){
- ctx?.beginPath()
- ctx?.arc(this.position.x,this.position.y,20,0,2 * Math.PI)
- ctx!.fillStyle = "green"
- ctx?.fill()
- ctx?.closePath()
+draw(game:Game){
+ game.ctx?.beginPath()
+ game.ctx?.arc(this.position.x,this.position.y,20,0,2 * Math.PI)
+ game.ctx!.fillStyle = "green"
+ game.ctx?.fill()
+ game.ctx?.closePath()
 }
 
 

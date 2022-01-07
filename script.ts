@@ -1,47 +1,48 @@
-"use strict"
-
+"use strict" 
+import { Game } from "./classes/game.js"
 import { Mass } from "./classes/mass.js";
 import { Vector } from "./classes/vector.js";
+(window as any ).game = new Game(500,500)
 
 
-const canvas=<HTMLCanvasElement> document.getElementById("canvas")
-export const ctx = canvas.getContext("2d")
+// const canvas=<HTMLCanvasElement> document.getElementById("canvas")
+// export const ctx = canvas.getContext("2d")
 
-let isActive = false
-let mouseDownPoint: Vector
+// let isActive = false
+// let mouseDownPoint: Vector
 
-canvas.addEventListener("mousemove", mouseMove)
+// canvas.addEventListener("mousemove", mouseMove)
 
-function mouseMove(e:MouseEvent){
- if(isActive == true){
-
-
- console.log(e.clientX,e.clientY);
- }
-
-}
+// function mouseMove(e:MouseEvent){
+//  if(isActive == true){
 
 
-canvas.addEventListener("mousedown", mouseDown)
+//  console.log(e.clientX,e.clientY);
+//  }
 
-function mouseDown(e:MouseEvent){
- mouseDownPoint = new Vector(e.clientX,e.clientY)
- isActive = true
-  let mass = new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0))
-  mass.draw()
-}
+// }
 
 
+// canvas.addEventListener("mousedown", mouseDown)
 
-canvas.addEventListener("mouseup", mouseUp)
+// function mouseDown(e:MouseEvent){
+//  mouseDownPoint = new Vector(e.clientX,e.clientY)
+//  isActive = true
+//   let mass = new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0))
+//   mass.draw()
+// }
 
 
-function mouseUp(e:MouseEvent){
- isActive = false
-  let mass = new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0))
-  mass.draw()
- ctx?.moveTo(mouseDownPoint.x,mouseDownPoint.y)
- ctx!.lineTo(e.clientX,e.clientY)
- ctx?.stroke()
+
+// canvas.addEventListener("mouseup", mouseUp)
+
+
+// function mouseUp(e:MouseEvent){
+//  isActive = false
+//   let mass = new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0))
+//   mass.draw()
+//  ctx?.moveTo(mouseDownPoint.x,mouseDownPoint.y)
+//  ctx!.lineTo(e.clientX,e.clientY)
+//  ctx?.stroke()
  
-}
+// }
