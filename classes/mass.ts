@@ -6,6 +6,7 @@ export class Mass {
  position:Vector = new Vector(50,50)
  velocity:Vector = new Vector(0,0)
  target: Vector = new Vector(0,0)
+ mass:number=1
 
 constructor(position: Vector, velocity: Vector, target: Vector){
  this.position = position
@@ -19,6 +20,10 @@ draw(game:Game){
  game.ctx!.fillStyle = "green"
  game.ctx?.fill()
  game.ctx?.closePath()
+}
+
+move(){
+    this.position=this.position.add(this.velocity)
 }
 
 

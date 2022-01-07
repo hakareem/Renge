@@ -2,7 +2,7 @@
 import { Game } from "./classes/game.js"
 import { Mass } from "./classes/mass.js";
 import { Vector } from "./classes/vector.js";
-(window as any ).game = new Game(500,500)
+(window as any ).game = new Game(window.innerWidth,window.innerHeight)
 
 
 // const canvas=<HTMLCanvasElement> document.getElementById("canvas")
