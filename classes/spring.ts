@@ -26,8 +26,8 @@ export class Spring{
         let direction:Vector= this.a.position.subtract(this.b.position).normalise()
         let extension:number = this.a.position.distanceFrom(this.b.position)-this.restLength
         direction.multiplyIn(this.k*extension) //this changes direction itself
-        this.a.position.addIn(direction)
         this.b.position.addIn(direction)
+        this.a.position.addIn(direction.multiply(-1))
         
     }
 
