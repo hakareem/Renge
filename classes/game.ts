@@ -85,13 +85,17 @@ export class Game {
                     let xDistance = this.masses[i].position.x - this.mouseX
                     let yDistance = this.masses[i].position.y - this.mouseY
                     if (xDistance*xDistance + yDistance*yDistance < distance){
-                        this.selected[this.selected.length] = i
+
+                       this.selected.push(this.selected[this.selected.length] = i)
                     }
                 }
+                if (this.selected.length === 1){
+                    this.downMass =this.masses[this.selected[i]]
+                
+                }
             }
-            // if (this.selected.length === 2){
-            //     this.masses[this.selected[0]].connect(this.masses[this.selected[1]])
-            //     this.masses[this.selected[0]].connect(this.masses[this.selected[1]])
+            
+                
             //     this.selected = []
             // }
             // draw()
