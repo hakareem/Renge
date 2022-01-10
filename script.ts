@@ -5,6 +5,10 @@ import { Vector } from "./classes/vector.js";
 (window as any ).game = new Game(window.innerWidth,window.innerHeight)
 
 
+
+
+
+
 // const canvas=<HTMLCanvasElement> document.getElementById("canvas")
 // export const ctx = canvas.getContext("2d")
 

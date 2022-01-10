@@ -16,7 +16,7 @@ constructor(position: Vector, velocity: Vector, target: Vector){
 
 draw(game:Game){
  game.ctx?.beginPath()
- game.ctx?.arc(this.position.x,this.position.y,20,0,2 * Math.PI)
+ game.ctx?.arc(this.position.x,this.position.y,game.massRadius,0,2 * Math.PI)
  game.ctx!.fillStyle = "green"
  game.ctx?.fill()
  game.ctx?.closePath()
