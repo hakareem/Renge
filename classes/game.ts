@@ -9,13 +9,19 @@ export class Game {
     ctx:CanvasRenderingContext2D;
     isActive:boolean = false;
     mouseDownPoint:Vector = new Vector(0,0);
+    mousedown:boolean=false;
+
     mouseUpPoint:Vector=new Vector(0,0)
     gravity:Vector=new Vector(0,0.1)
     springs:Spring[]=[]
     masses:Mass[]=[]
-
+    selected:[]|any=[]
     downMass:Mass|null= null
     upMass:Mass|null= null 
+    mode:number=0   
+    mouseX=50
+    mouseY=50
+
 
     constructor(width:number,height:number){
         this.canvas = document.createElement('canvas')
@@ -61,13 +67,35 @@ export class Game {
     }
 
     mouseDown(e:MouseEvent){
-        // this.mouseMove(e.clientX,e.clientY)
+        this.mouseMove(e)
         this.mouseDownPoint = new Vector(e.clientX,e.clientY)
         this.isActive = true
-        this.downMass = new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0))
-        this.masses.push(this.downMass)
+        this.mousedown = true
 
-       // mass.draw(this)
+        if (this.mode === 0){ //this creates a mass
+            this.downMass = new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0))
+            this.masses.push(this.downMass)
+
+            //Mass.draw()
+        }
+        if (this.mode === 1){
+            let distance = 100
+            for (let i =0; i < this.masses.length; i++){
+                if (this.selected.length === 0 || this.selected[0] != i){
+                    let xDistance = this.masses[i].position.x - this.mouseX
+                    let yDistance = this.masses[i].position.y - this.mouseY
+                    if (xDistance*xDistance + yDistance*yDistance < distance){
+                        this.selected[this.selected.length] = i
+                    }
+                }
+            }
+            // if (this.selected.length === 2){
+            //     this.masses[this.selected[0]].connect(this.masses[this.selected[1]])
+            //     this.masses[this.selected[0]].connect(this.masses[this.selected[1]])
+            //     this.selected = []
+            // }
+            // draw()
+        }
        
     }
     mouseUp(e:MouseEvent){
