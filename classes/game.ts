@@ -18,6 +18,8 @@ export class Game {
     upMass:Mass|null= null 
 
     massRadius=20
+    gravityOn:boolean=false
+    
 
 
     constructor(width:number,height:number){
@@ -33,7 +35,18 @@ export class Game {
         this.canvas.addEventListener('mousemove',(e) => this.mouseMove(e))
         //requestAnimationFrame(this.cycle)
         this.cycle()
+
+        let button= document.createElement("button")
+        document.body.appendChild(button)
+        button.addEventListener("click",()=> this.toggleGravity())
+
     }   
+
+    toggleGravity(){
+        this.gravityOn=!this.gravityOn  //switches between off and on the = !
+        console.log("gravity"+ this.gravityOn)
+    }
+
     massAtPoint(p:Vector){
         for(let i=0;i<this.masses.length;i++){
             //if this mass overlaps the point p, return it
@@ -44,6 +57,8 @@ export class Game {
         return null
     }
 
+    
+
 
     cycle(){
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
@@ -51,7 +66,9 @@ export class Game {
         for (let i=0;i<this.masses.length;i++){
             this.masses[i].draw(this)
             this.masses[i].move()
-            // this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
+            if(this.gravityOn){
+                this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
+            }
 
 
         }
