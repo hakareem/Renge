@@ -22,7 +22,7 @@ export class Game {
     // rect:CanvasRect;
     mouseX: number=50
     mouseY: number=50
-    ground = 680
+    ground = 900
 
     constructor(width:number,height:number){
         this.canvas = document.createElement('canvas')
@@ -45,11 +45,18 @@ export class Game {
         document.body.appendChild(button)
         button.addEventListener("click",()=> this.toggleGravity())
 
+        let undo = document.createElement("button")
+        undo.classList.add("undo")
+        undo.innerHTML = "Undo Last Move"
+        document.body.appendChild(undo)
+        // undo.addEventListener("click", ()=> this.undoLastMove())
+
         let restart = document.createElement("button")
         restart.classList.add("restart")
         restart.innerHTML ="Reset Game"
         document.body.appendChild(restart)
         restart.addEventListener("click", ()=>this.reset() )
+
     }   
 
     toggleGravity(){
@@ -87,7 +94,7 @@ export class Game {
     
         for (let i=0; i <this.springs.length;i++){
             this.springs[i].drawSpring(this)
-            this.springs[i].updateLength(this)
+            this.springs[i].stretch(this)
 
         }
         this.ctx.stroke()
@@ -106,6 +113,8 @@ export class Game {
         else{
             this.downMass = new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0))
             this.masses.push(this.downMass)
+            // this.springs.push(new Spring(0.1,this.downMass!,this.downMass))
+
         }
        // mass.draw(this)
        
@@ -135,26 +144,19 @@ export class Game {
     //         }
     // }
 
-//     findMouse(e:MouseEvent){
-//     this.mouseX = e.clientX - rect.left
-//     this.mouseY = e.clientY - rect.top
-// }
+    // findMouse(e:MouseEvent){
+    // this.mouseX = e.clientX - this.rect.left
+    // this.mouseY = e.clientY - this.rect.top
+    // }
     mouseMove(e:MouseEvent){
      for (let j = 0; j < this.springs.length; j++){
-       let x1 = this.springs[j].a.position.x 
-       let y1 = this.springs[j].a.position.y
-       let x2 = this.springs[j].b.position.x 
-       let y2 = this.springs[j].b.position.y 
-
-      let gradient = (y2 - y1) / (x2 -x1) 
-      this.cursor.x = this.mouseX 
-      this.cursor.y = (this.mouseX - x1) * gradient + y1
+     
       
      }
  }
 
- reset(){
+reset(){
     this.masses = []
     this.springs = []
 }
- }
+}

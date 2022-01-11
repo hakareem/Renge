@@ -11,7 +11,7 @@ export class Spring{
     
     k:number=0.1
     restLength:number=0
-
+    broken: boolean = false
 
     constructor(k:number,public a:Mass, public b:Mass){
 
@@ -21,8 +21,10 @@ export class Spring{
     }
 
     
-    updateLength(game:Game){
-     
+    stretch(game:Game){
+        if(this.broken){
+            return
+        }
         let direction:Vector= this.a.position.subtract(this.b.position).normalise()
         let extension:number = this.a.position.distanceFrom(this.b.position)-this.restLength
         direction.multiplyIn(this.k*extension) //this changes direction itself
@@ -36,14 +38,45 @@ export class Spring{
         }
     }
 
+    get length(){
+    return this.a.position.distanceFrom(this.b.position)
+    }
+
     drawSpring(game:Game){
-       game.ctx.beginPath()
-    
-       
+    if(this.broken){
+        return
+    }
+    game.ctx.beginPath()
+    game.ctx.lineWidth = 5
+    let tension = this.length / this.restLength
+    if(tension > 1.05 || tension < 0.95){
+        this.broken = true 
+        console.log("spring broken");
+        
+    } 
+    let color = `rgb(${128 + Math.ceil(tension- 1) * 200},0,255)`
+    console.log(color);
+    game.ctx.strokeStyle = color
+
+
     //    game.ctx?.moveTo(game.downMass!,game.upMass)
-       game.ctx!.moveTo(this.a.position.x,this.a.position.y)
-       game.ctx!.lineTo(this.b.position.x,this.b.position.y)
-       game.ctx?.stroke()
+    game.ctx!.moveTo(this.a.position.x,this.a.position.y)
+    game.ctx!.lineTo(this.b.position.x,this.b.position.y)
+    game.ctx?.stroke()
+}
+
+
+    distanceFrom(p:Vector): number{
+        let x1 = this.a.position.x 
+        let y1 = this.a.position.y
+        let x2 = this.b.position.x 
+        let y2 = this.b.position.y 
+
+        let closestPoint:Vector = new Vector(p.x,0)
+        let gradient = (y2 - y1) / (x2 -x1) 
+
+        closestPoint.y = (p.x - x1) * gradient + y1
+        return p.distanceFrom(closestPoint)
     }
 
 }
