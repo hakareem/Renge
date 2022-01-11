@@ -5,13 +5,15 @@ import { Game } from "./game.js";
 export class Mass {
  position:Vector = new Vector(50,50)
  velocity:Vector = new Vector(0,0)
- target: Vector = new Vector(0,0)
- mass:number=1
+ //target: Vector = new Vector(0,0)
+ index:number
 
-constructor(position: Vector, velocity: Vector, target: Vector){
+constructor(game:Game,position: Vector, velocity: Vector){ //target: Vector){
  this.position = position
  this.velocity = velocity
- this.target = target
+ this.index=game.masses.length
+ //this.target = target
+ game.masses.push(this)
 }
 
 draw(game:Game){

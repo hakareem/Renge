@@ -9,7 +9,10 @@ export class Vector {
     this.y = y
     }
 
-
+    static create(o:any){
+        return new Vector(o.x,o.y)
+    
+    }
     add(v: Vector){
     return new Vector(this.x + v.x, this.y + v.y)
     }

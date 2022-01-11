@@ -57,7 +57,48 @@ export class Game {
         document.body.appendChild(restart)
         restart.addEventListener("click", ()=>this.reset() )
 
+        let saveButton = document.createElement("button")
+        saveButton.classList.add("save")
+        saveButton.innerHTML ="Save Level"
+        document.body.appendChild(saveButton)
+        saveButton.addEventListener("click", ()=>this.saveLevel() )
+
+        let loadButton = document.createElement("button")
+        loadButton.classList.add("load")
+        loadButton.innerHTML ="Load Level"
+        document.body.appendChild(loadButton)
+        loadButton.addEventListener("click", ()=>this.loadLevel() )
     }   
+
+    saveLevel(){
+        //we have a bunch of masses and springs
+        //we want to save them how they "look" on the screen
+        //then clear the canvas and have the old level display
+
+
+        //localStorage.setItem("masses",JSON.stringify(this.masses[0].position))
+        localStorage.setItem("Game",JSON.stringify(this))
+    }
+
+    loadLevel(){
+        
+        let dataString:string|null=localStorage.getItem("Game")
+        let loaded:Game= JSON.parse(dataString!) //you now need to remake springs and masses based on the loaded data
+        this.masses=[]
+        this.springs=[]
+        for (let i=0;i<loaded.masses.length;i++){
+            let m = loaded.masses[i]
+            new Mass(this,Vector.create( m.position),Vector.create(m.velocity))
+
+            
+            
+        }
+     
+        for (let i=0;i<loaded.springs.length;i++){
+            console.log(loaded.springs[i])
+            this.springs.push(new Spring(0.1,this.masses[loaded.springs[i].a.index],this.masses[loaded.springs[i].b.index]))
+        }
+    }
 
     toggleGravity(){
         this.gravityOn=!this.gravityOn;  //switches between off and on the = !
@@ -111,8 +152,8 @@ export class Game {
             this.downMass=map
         }
         else{
-            this.downMass = new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0))
-            this.masses.push(this.downMass)
+            this.downMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0))//, new Vector(0,0))
+            //this.masses.push(this.downMass)
             // this.springs.push(new Spring(0.1,this.downMass!,this.downMass))
 
         }
@@ -127,8 +168,8 @@ export class Game {
             this.upMass=map
         }
         else{
-            this.upMass = new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0))
-            this.masses.push(this.upMass)
+            this.upMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0)) //new Vector(0,0))
+            //this.masses.push(this.upMass)
         }
             this.springs.push( new Spring(0.1,this.downMass!,this.upMass))
         
