@@ -20,9 +20,9 @@ export class Game {
     massRadius=9
     gravityOn:boolean=false
     // rect:CanvasRect;
-    mouseX: number=50
-    mouseY: number=50
     ground = 900
+    mouseCoords = new Vector(0, 0)
+    selectedSpring: Spring | null = null 
 
     constructor(width:number,height:number){
         this.canvas = document.createElement('canvas')
@@ -138,9 +138,15 @@ export class Game {
             this.springs[i].stretch(this)
 
         }
-        this.ctx.stroke()
+        if(this.selectedSpring){
+            this.ctx.strokeStyle="cyan"
+            this.ctx.beginPath()
+            this.ctx.moveTo(this.selectedSpring?.a.position.x, this.selectedSpring?.a.position.y)
+            this.ctx.lineTo(this.selectedSpring?.b.position.x, this.selectedSpring?.b.position.y)
+            this.ctx.stroke()
+        }
 
-       requestAnimationFrame(()=> this.cycle()) 
+    requestAnimationFrame(()=> this.cycle()) 
     }
 
     mouseDown(e:MouseEvent){
@@ -189,12 +195,22 @@ export class Game {
     // this.mouseX = e.clientX - this.rect.left
     // this.mouseY = e.clientY - this.rect.top
     // }
+
+    
     mouseMove(e:MouseEvent){
-     for (let j = 0; j < this.springs.length; j++){
-     
-      
-     }
- }
+    this.mouseCoords = new Vector(e.clientX,e.clientY)
+    for (let j = 0; j < this.springs.length; j++){
+        if(!this.springs[j].outsideBox(this.mouseCoords)){
+            console.log("inside");
+            console.log(this.springs[j].distanceFrom(this.mouseCoords))
+            
+            if(this.springs[j].distanceFrom(this.mouseCoords) < 10){ 
+                this.selectedSpring = this.springs[j]
+            }
+
+        }
+    }
+}
 
 reset(){
     this.masses = []
