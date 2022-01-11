@@ -26,14 +26,19 @@ export class Spring{
         let direction:Vector= this.a.position.subtract(this.b.position).normalise()
         let extension:number = this.a.position.distanceFrom(this.b.position)-this.restLength
         direction.multiplyIn(this.k*extension) //this changes direction itself
-        if(this.b.position.y <= game.ground && this.a.position.y <= game.ground || this.b.position.x <= game.ground && this.a.position.x <= game.ground){
-            this.b.position.addIn(direction)
-            this.a.position.addIn(direction.multiply(-1))
+        // if(this.b.position.y <= game.ground && this.a.position.y <= game.ground || this.b.position.x <= game.ground && this.a.position.x <= game.ground){
+        if (this.a.position.y<game.ground){
+
+            this.a.velocity.addIn(direction.multiply(-1))
+        }
+        if (this.b.position.y<game.ground){
+            this.b.velocity.addIn(direction)
         }
     }
 
     drawSpring(game:Game){
        game.ctx.beginPath()
+    
        
     //    game.ctx?.moveTo(game.downMass!,game.upMass)
        game.ctx!.moveTo(this.a.position.x,this.a.position.y)
