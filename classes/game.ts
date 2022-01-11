@@ -17,7 +17,7 @@ export class Game {
     downMass:Mass|null= null
     upMass:Mass|null= null 
 
-    massRadius=12
+    massRadius=9
     gravityOn:boolean=false
     // rect:CanvasRect;
     mouseX: number=50
