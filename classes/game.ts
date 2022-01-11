@@ -81,6 +81,7 @@ export class Game {
             this.masses[i].move(this)
             if(this.gravityOn){
                 this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
+                this.masses[i].velocity.multiplyIn(0.97)
             }
         }
     
