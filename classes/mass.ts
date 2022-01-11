@@ -22,20 +22,11 @@ draw(game:Game){
  game.ctx?.closePath()
 }
 
-move(){
+move(game:Game){
+    if(this.position.y < 750){
+
     this.position=this.position.add(this.velocity)
+    }
 }
-
-
-// drawLine(){
-
-//  ctx.beginPath()
-//  ctx.lineTo()
-
-
-//  ctx.closePath()
-// }
-
-
 
 }
