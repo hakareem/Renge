@@ -47,15 +47,15 @@ export class Spring{
         return
     }
     game.ctx.beginPath()
-    game.ctx.lineWidth = 5
+    game.ctx.lineWidth = 3
     let tension = this.length / this.restLength
     if(tension > 1.05 || tension < 0.95){
         this.broken = true 
-        console.log("spring broken");
+        // console.log("spring broken");
         
     } 
     let color = `rgb(${128 + Math.ceil(tension- 1) * 200},0,255)`
-    console.log(color);
+    // console.log(color);
     game.ctx.strokeStyle = color
 
 
@@ -65,13 +65,27 @@ export class Spring{
     game.ctx?.stroke()
 }
 
+    outsideBox(p:Vector){
+        if(p.x > this.a.position.x && p.x > this.b.position.x){             
+            return true// too far right
+        } else if(p.x < this.a.position.x && p.x < this.b.position.x){
+            return true// too far left
+        } 
+        if(p.y > this.a.position.y && p.y > this.b.position.y){
+            return true // too far above
+        } else if(p.y < this.a.position.y && p.y < this.b.position.y){
+            return true // too far below
+        } 
+        return false // false === its inside the box
+    }
 
     distanceFrom(p:Vector): number{
+    
         let x1 = this.a.position.x 
         let y1 = this.a.position.y
         let x2 = this.b.position.x 
         let y2 = this.b.position.y 
-
+    
         let closestPoint:Vector = new Vector(p.x,0)
         let gradient = (y2 - y1) / (x2 -x1) 
 
