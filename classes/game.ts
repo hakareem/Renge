@@ -22,7 +22,7 @@ export class Game {
     // rect:CanvasRect;
     mouseX: number=50
     mouseY: number=50
-    ground = 660
+    ground = 500
 
     constructor(width:number,height:number){
         this.canvas = document.createElement('canvas')
@@ -120,7 +120,7 @@ export class Game {
             this.upMass = new Mass(new Vector(e.clientX, e.clientY), new Vector(0,0), new Vector(0,0))
             this.masses.push(this.upMass)
         }
-            this.springs.push( new Spring(0.1, 250,this.downMass!,this.upMass))
+            this.springs.push( new Spring(0.1,this.downMass!,this.upMass))
         
 
         //mass.draw(this)

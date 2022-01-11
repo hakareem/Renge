@@ -13,11 +13,11 @@ export class Spring{
     restLength:number=0
 
 
-    constructor(k:number,restLength:number,public a:Mass, public b:Mass){
+    constructor(k:number,public a:Mass, public b:Mass){
 
         
         this.k=k
-        this.restLength=restLength
+        this.restLength= this.a.position.distanceFrom(this.b.position)
     }
 
     

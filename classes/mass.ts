@@ -23,7 +23,7 @@ draw(game:Game){
 }
 
 move(game:Game){
-    if(this.position.y < 750){
+    if(this.position.y < game.ground){
 
     this.position=this.position.add(this.velocity)
     }
