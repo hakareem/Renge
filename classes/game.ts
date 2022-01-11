@@ -22,7 +22,7 @@ export class Game {
     // rect:CanvasRect;
     mouseX: number=50
     mouseY: number=50
-    ground = 500
+    ground = 680
 
     constructor(width:number,height:number){
         this.canvas = document.createElement('canvas')
@@ -86,7 +86,7 @@ export class Game {
     
         for (let i=0; i <this.springs.length;i++){
             this.springs[i].drawSpring(this)
-            this.springs[i].updateLength()
+            this.springs[i].updateLength(this)
 
         }
         this.ctx.stroke()

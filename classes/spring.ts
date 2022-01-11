@@ -21,14 +21,15 @@ export class Spring{
     }
 
     
-    updateLength(){
+    updateLength(game:Game){
      
         let direction:Vector= this.a.position.subtract(this.b.position).normalise()
         let extension:number = this.a.position.distanceFrom(this.b.position)-this.restLength
         direction.multiplyIn(this.k*extension) //this changes direction itself
-        this.b.position.addIn(direction)
-        this.a.position.addIn(direction.multiply(-1))
-        
+        if(this.b.position.y <= game.ground && this.a.position.y <= game.ground || this.b.position.x <= game.ground && this.a.position.x <= game.ground){
+            this.b.position.addIn(direction)
+            this.a.position.addIn(direction.multiply(-1))
+        }
     }
 
     drawSpring(game:Game){
