@@ -12,7 +12,8 @@ export class Spring{
     k:number=0.1
     restLength:number=0
     broken: boolean = false
-
+    active: boolean = true;
+    
     constructor(k:number,public a:Mass, public b:Mass){
 
         

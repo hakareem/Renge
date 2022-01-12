@@ -23,6 +23,7 @@ export class Game {
     ground = 900
     mouseCoords = new Vector(0, 0)
     selectedSpring: Spring | null = null 
+    
 
     constructor(width:number,height:number){
         this.canvas = document.createElement('canvas')
@@ -36,14 +37,16 @@ export class Game {
         this.canvas.addEventListener('mousedown',(e) => this.mouseDown(e))
         this.canvas.addEventListener('mouseup',(e) => this.mouseUp(e))
         this.canvas.addEventListener('mousemove',(e) => this.mouseMove(e))
+        // this.canvas.addEventListener("dblclick",(e)=>this.removeSpring(e))
         //requestAnimationFrame(this.cycle)
         this.cycle()
 
         let button= document.createElement("button")
         button.classList.add("btn")
-        button.innerHTML ="Gravity"
+        button.innerText = "Gravity Off"
         document.body.appendChild(button)
-        button.addEventListener("click",()=> this.toggleGravity())
+        button.addEventListener("click",()=> {this.toggleGravity();button.innerHTML = this.gravityOn?"Gravity On":"Gravity Off"})
+
 
         let undo = document.createElement("button")
         undo.classList.add("undo")
@@ -101,7 +104,9 @@ export class Game {
     }
 
     toggleGravity(){
-        this.gravityOn=!this.gravityOn;  //switches between off and on the = !
+
+        this.gravityOn=!this.gravityOn //switches between off and on the = !
+        
         
         console.log("gravity"+ this.gravityOn)
     }
@@ -196,24 +201,27 @@ export class Game {
     // this.mouseY = e.clientY - this.rect.top
     // }
 
-    
+ 
     mouseMove(e:MouseEvent){
     this.mouseCoords = new Vector(e.clientX,e.clientY)
     for (let j = 0; j < this.springs.length; j++){
+        let springer =this.springs[j]
         if(!this.springs[j].outsideBox(this.mouseCoords)){
             console.log("inside");
             console.log(this.springs[j].distanceFrom(this.mouseCoords))
             
             if(this.springs[j].distanceFrom(this.mouseCoords) < 10){ 
                 this.selectedSpring = this.springs[j]
+                
+                }
             }
 
-        }
+        
     }
 }
 
 reset(){
     this.masses = []
     this.springs = []
-}
+    }
 }
