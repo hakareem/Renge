@@ -41,35 +41,40 @@ export class Game {
         //requestAnimationFrame(this.cycle)
         this.cycle()
 
+
+        let container = document.createElement("div")
+        document.body.appendChild(container)
+        container.classList.add("container")
+
         let button= document.createElement("button")
         button.classList.add("btn")
         button.innerText = "Gravity Off"
-        document.body.appendChild(button)
+        container.appendChild(button)
         button.addEventListener("click",()=> {this.toggleGravity();button.innerHTML = this.gravityOn?"Gravity On":"Gravity Off"})
 
 
         let undo = document.createElement("button")
         undo.classList.add("undo")
         undo.innerHTML = "Undo Last Move"
-        document.body.appendChild(undo)
+        container.appendChild(undo)
         // undo.addEventListener("click", ()=> this.undoLastMove())
 
         let restart = document.createElement("button")
         restart.classList.add("restart")
         restart.innerHTML ="Reset Game"
-        document.body.appendChild(restart)
+        container.appendChild(restart)
         restart.addEventListener("click", ()=>this.reset() )
 
         let saveButton = document.createElement("button")
         saveButton.classList.add("save")
         saveButton.innerHTML ="Save Level"
-        document.body.appendChild(saveButton)
+        container.appendChild(saveButton)
         saveButton.addEventListener("click", ()=>this.saveLevel() )
 
         let loadButton = document.createElement("button")
         loadButton.classList.add("load")
         loadButton.innerHTML ="Load Level"
-        document.body.appendChild(loadButton)
+        container.appendChild(loadButton)
         loadButton.addEventListener("click", ()=>this.loadLevel() )
     }   
 
@@ -212,7 +217,7 @@ export class Game {
             
             if(this.springs[j].distanceFrom(this.mouseCoords) < 10){ 
                 this.selectedSpring = this.springs[j]
-                
+                // this.springs.splice(1)
                 }
             }
 

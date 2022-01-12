@@ -6,7 +6,8 @@
 html, body {
 				background-color: rgba(15, 162, 207, 0.061);
 				overflow: hidden;
-				display: block;
+				/* display: block; */
+				
 			}
 
 canvas {
@@ -15,7 +16,12 @@ canvas {
 				left: 20%;
 				/* bottom: 5%;  */
 			}
-	
+	.container{
+				position: absolute;
+				top: 20px;
+				right: 20px;
+				justify-content: space-evenly;
+	}
 
 			.btn,.restart,.undo,.save,.load {
 				background-color: rgb(255, 253, 253);
