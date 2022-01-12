@@ -97,6 +97,7 @@ export class Game {
         if(this.selectedSpring){
             let springsIndex = this.selectedSpring.index
             this.springs.splice(springsIndex,1)
+            this.selectedSpring=null
         }
     }
 
@@ -251,5 +252,6 @@ export class Game {
 reset(){
     this.masses = []
     this.springs = []
+    this.selectedSpring=null
     }
 }
