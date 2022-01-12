@@ -101,6 +101,12 @@ export class Game {
         // removeButton.innerHTML ="Remove Spring"
         // document.body.appendChild(removeButton)
         // removeButton.addEventListener("click", ()=>this.removeSelectedSpring() )
+    
+        let mode= document.createElement("button")
+        mode.classList.add("modeBtn")
+        mode.innerText = "Edit Mode"
+        container2.appendChild(mode)
+        mode.addEventListener("click",()=> {this.toggleMode(this);mode.innerHTML = this.editMode?"Game Mode":"Edit Mode"})
     }   
 
     removeSelectedSpring(e:KeyboardEvent){

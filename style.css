@@ -26,7 +26,7 @@ canvas {
 		position: absolute;
 		top: 30px;
 		left: 20px;
-			justify-content: space-evenly;
+		justify-content: space-evenly;
 	}
 
 			.btn,.restart,.undo,.save,.load,.remove-spring,.modeBtn,.uI {
