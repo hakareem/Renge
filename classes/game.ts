@@ -76,7 +76,20 @@ export class Game {
         loadButton.innerHTML ="Load Level"
         container.appendChild(loadButton)
         loadButton.addEventListener("click", ()=>this.loadLevel() )
+
+        let removeButton = document.createElement("button")
+        removeButton.classList.add("remove-spring")
+        removeButton.innerHTML ="Remove Spring"
+        document.body.appendChild(removeButton)
+        removeButton.addEventListener("click", ()=>this.removeSelectedSpring() )
     }   
+
+    removeSelectedSpring(){
+        if(this.selectedSpring){
+            let springsIndex = this.selectedSpring.index
+            this.springs.splice(springsIndex,1)
+        }
+    }
 
     saveLevel(){
         //we have a bunch of masses and springs
@@ -104,7 +117,7 @@ export class Game {
      
         for (let i=0;i<loaded.springs.length;i++){
             console.log(loaded.springs[i])
-            this.springs.push(new Spring(0.1,this.masses[loaded.springs[i].a.index],this.masses[loaded.springs[i].b.index]))
+            this.springs.push(new Spring(this,0.1,this.masses[loaded.springs[i].a.index],this.masses[loaded.springs[i].b.index]))
         }
     }
 
@@ -188,7 +201,7 @@ export class Game {
             //this.masses.push(this.upMass)
         }
         if (this.downMass != this.upMass){
-            this.springs.push( new Spring(0.1,this.downMass!,this.upMass))
+            this.springs.push( new Spring(this,0.1,this.downMass!,this.upMass))
         }
 
         //mass.draw(this)
