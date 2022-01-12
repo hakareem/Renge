@@ -156,6 +156,7 @@ export class Game {
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
         this.ctx.fillStyle = "red"
         this.ctx.fillRect(0,this.ground,this.canvas.width, this.canvas.height)
+        this.drawGrid(100);
         this.ctx.beginPath()
         for (let i=0;i<this.masses.length;i++){
             this.masses[i].draw(this)
@@ -178,10 +179,27 @@ export class Game {
             this.ctx.lineTo(this.selectedSpring?.b.position.x, this.selectedSpring?.b.position.y)
             this.ctx.stroke()
         }
-
+        
     requestAnimationFrame(()=> this.cycle()) 
     }
-
+     drawGrid(size:number) {
+          
+        this.ctx.strokeStyle = "rgba(0,0,255,0.2)" 
+        for (let x=0;x<=this.canvas.width;x+=size) {
+            //draw vertical lines
+            this.ctx.moveTo(x, 0);
+            this.ctx.lineTo(x, this.canvas.height);
+        }
+        for (let y=0;y<=this.canvas.height;y+=size) {
+            //draw horizontal lines
+            this.ctx.moveTo(0, y);
+            this.ctx.lineTo(this.canvas.width, y);
+            
+        };
+         this.ctx.stroke();
+         
+    }
+    
     mouseDown(e:MouseEvent){
         // this.mouseMove(e.clientX,e.clientY)
         this.mouseDownPoint = new Vector(e.clientX,e.clientY)
