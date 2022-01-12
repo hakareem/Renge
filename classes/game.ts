@@ -23,7 +23,7 @@ export class Game {
     ground = 900
     mouseCoords = new Vector(0, 0)
     selectedSpring: Spring | null = null 
-    
+    selectedMass: Mass | null = null 
 
     constructor(width:number,height:number){
         this.canvas = document.createElement('canvas')
@@ -156,6 +156,14 @@ export class Game {
             this.ctx.stroke()
         }
 
+           if(this.selectedMass){
+            this.ctx.strokeStyle="red"
+            this.ctx.beginPath()
+            this.ctx.moveTo(this.selectedMass?.position.x, this.selectedMass?.position.y)
+            this.ctx.lineTo(this.selectedMass?.position.x, this.selectedMass?.position.y)
+            this.ctx.stroke()
+        }
+
     requestAnimationFrame(()=> this.cycle()) 
     }
 
@@ -220,11 +228,13 @@ export class Game {
                 this.selectedSpring = this.springs[j]
                 // this.springs.splice(1)
                 }
-            }
-
+            }       
+            
+        
         
     }
 }
+
 
 reset(){
     this.masses = []
