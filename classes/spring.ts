@@ -12,12 +12,14 @@ export class Spring{
     k:number=0.1
     restLength:number=0
     broken: boolean = false
+    index:number = 0
 
-    constructor(k:number,public a:Mass, public b:Mass){
+    constructor(game:Game,k:number,public a:Mass, public b:Mass){
 
         
         this.k=k
         this.restLength= this.a.position.distanceFrom(this.b.position)
+        this.index = game.springs.length
     }
 
     
