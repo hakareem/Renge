@@ -39,34 +39,49 @@ export class Game {
         //requestAnimationFrame(this.cycle)
         this.cycle()
 
+        let container = document.createElement("div")
+        document.body.appendChild(container)
+        container.classList.add("container")
+
         let button= document.createElement("button")
         button.classList.add("btn")
-        button.innerHTML ="Gravity"
-        document.body.appendChild(button)
-        button.addEventListener("click",()=> this.toggleGravity())
+        button.innerText = "Gravity Off"
+        container.appendChild(button)
+        button.addEventListener("click",()=> {this.toggleGravity();button.innerHTML = this.gravityOn?"Gravity On":"Gravity Off"})
+
 
         let undo = document.createElement("button")
         undo.classList.add("undo")
         undo.innerHTML = "Undo Last Move"
-        document.body.appendChild(undo)
+        container.appendChild(undo)
         // undo.addEventListener("click", ()=> this.undoLastMove())
 
         let restart = document.createElement("button")
         restart.classList.add("restart")
         restart.innerHTML ="Reset Game"
-        document.body.appendChild(restart)
+        container.appendChild(restart)
         restart.addEventListener("click", ()=>this.reset() )
+
+        let saveInput= document.createElement("input")
+        saveInput.id="saveInput"
+        saveInput.placeholder="Save Level Name"
+        container.appendChild(saveInput)
 
         let saveButton = document.createElement("button")
         saveButton.classList.add("save")
         saveButton.innerHTML ="Save Level"
-        document.body.appendChild(saveButton)
+        container.appendChild(saveButton)
         saveButton.addEventListener("click", ()=>this.saveLevel() )
+
+        let loadInput = document.createElement("input")
+        loadInput.id="loadInput"
+        loadInput.placeholder="Load Level Name"
+        container.appendChild(loadInput)
 
         let loadButton = document.createElement("button")
         loadButton.classList.add("load")
         loadButton.innerHTML ="Load Level"
-        document.body.appendChild(loadButton)
+        container.appendChild(loadButton)
         loadButton.addEventListener("click", ()=>this.loadLevel() )
     }   
 
@@ -77,12 +92,12 @@ export class Game {
 
 
         //localStorage.setItem("masses",JSON.stringify(this.masses[0].position))
-        localStorage.setItem("Game",JSON.stringify(this))
+        localStorage.setItem((<HTMLInputElement>document.getElementById("saveInput")).value,JSON.stringify(this))
     }
 
     loadLevel(){
         
-        let dataString:string|null=localStorage.getItem("Game")
+        let dataString:string|null=localStorage.getItem((<HTMLInputElement>document.getElementById("loadInput")).value)
         let loaded:Game= JSON.parse(dataString!) //you now need to remake springs and masses based on the loaded data
         this.masses=[]
         this.springs=[]
