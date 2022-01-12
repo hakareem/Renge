@@ -177,8 +177,9 @@ export class Game {
             this.upMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0)) //new Vector(0,0))
             //this.masses.push(this.upMass)
         }
+        if (this.downMass != this.upMass){
             this.springs.push( new Spring(0.1,this.downMass!,this.upMass))
-        
+        }
 
         //mass.draw(this)
         // this.ctx?.moveTo(this.mouseDownPoint.x,this.mouseDownPoint.y)
