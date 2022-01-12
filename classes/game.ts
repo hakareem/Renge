@@ -23,6 +23,7 @@ export class Game {
     ground = 900
     mouseCoords = new Vector(0, 0)
     selectedSpring: Spring | null = null 
+    
 
     constructor(width:number,height:number){
         this.canvas = document.createElement('canvas')
@@ -36,37 +37,44 @@ export class Game {
         this.canvas.addEventListener('mousedown',(e) => this.mouseDown(e))
         this.canvas.addEventListener('mouseup',(e) => this.mouseUp(e))
         this.canvas.addEventListener('mousemove',(e) => this.mouseMove(e))
+        // this.canvas.addEventListener("dblclick",(e)=>this.removeSpring(e))
         //requestAnimationFrame(this.cycle)
         this.cycle()
 
+
+        let container = document.createElement("div")
+        document.body.appendChild(container)
+        container.classList.add("container")
+
         let button= document.createElement("button")
         button.classList.add("btn")
-        button.innerHTML ="Gravity"
-        document.body.appendChild(button)
-        button.addEventListener("click",()=> this.toggleGravity())
+        button.innerText = "Gravity Off"
+        container.appendChild(button)
+        button.addEventListener("click",()=> {this.toggleGravity();button.innerHTML = this.gravityOn?"Gravity On":"Gravity Off"})
+
 
         let undo = document.createElement("button")
         undo.classList.add("undo")
         undo.innerHTML = "Undo Last Move"
-        document.body.appendChild(undo)
+        container.appendChild(undo)
         // undo.addEventListener("click", ()=> this.undoLastMove())
 
         let restart = document.createElement("button")
         restart.classList.add("restart")
         restart.innerHTML ="Reset Game"
-        document.body.appendChild(restart)
+        container.appendChild(restart)
         restart.addEventListener("click", ()=>this.reset() )
 
         let saveButton = document.createElement("button")
         saveButton.classList.add("save")
         saveButton.innerHTML ="Save Level"
-        document.body.appendChild(saveButton)
+        container.appendChild(saveButton)
         saveButton.addEventListener("click", ()=>this.saveLevel() )
 
         let loadButton = document.createElement("button")
         loadButton.classList.add("load")
         loadButton.innerHTML ="Load Level"
-        document.body.appendChild(loadButton)
+        container.appendChild(loadButton)
         loadButton.addEventListener("click", ()=>this.loadLevel() )
     }   
 
@@ -101,7 +109,9 @@ export class Game {
     }
 
     toggleGravity(){
-        this.gravityOn=!this.gravityOn;  //switches between off and on the = !
+
+        this.gravityOn=!this.gravityOn //switches between off and on the = !
+        
         
         console.log("gravity"+ this.gravityOn)
     }
@@ -197,24 +207,27 @@ export class Game {
     // this.mouseY = e.clientY - this.rect.top
     // }
 
-    
+ 
     mouseMove(e:MouseEvent){
     this.mouseCoords = new Vector(e.clientX,e.clientY)
     for (let j = 0; j < this.springs.length; j++){
+        let springer =this.springs[j]
         if(!this.springs[j].outsideBox(this.mouseCoords)){
             console.log("inside");
             console.log(this.springs[j].distanceFrom(this.mouseCoords))
             
             if(this.springs[j].distanceFrom(this.mouseCoords) < 10){ 
                 this.selectedSpring = this.springs[j]
+                // this.springs.splice(1)
+                }
             }
 
-        }
+        
     }
 }
 
 reset(){
     this.masses = []
     this.springs = []
-}
+    }
 }
