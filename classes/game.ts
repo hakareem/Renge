@@ -80,7 +80,7 @@ export class Game {
         let removeButton = document.createElement("button")
         removeButton.classList.add("remove-spring")
         removeButton.innerHTML ="Remove Spring"
-        document.body.appendChild(removeButton)
+        container.appendChild(removeButton)
         removeButton.addEventListener("click", ()=>this.removeSelectedSpring() )
     }   
 
