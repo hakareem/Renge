@@ -36,7 +36,7 @@ export class Game {
         this.canvas.addEventListener('mousedown',(e) => this.mouseDown(e))
         this.canvas.addEventListener('mouseup',(e) => this.mouseUp(e))
         this.canvas.addEventListener('mousemove',(e) => this.mouseMove(e))
-        this.canvas.addEventListener('keydown',(e)=> this.removeSelectedSpring(e))
+        window.addEventListener('keydown',(e)=> this.removeSelectedSpring(e))
         //requestAnimationFrame(this.cycle)
         this.cycle()
 
@@ -93,10 +93,13 @@ export class Game {
     }   
 
     removeSelectedSpring(e:KeyboardEvent){
-        
+        console.log(`key pressed: ${e.key}`)
         if(this.selectedSpring && e.key == "Delete"){
+            console.log(`Deleted ${this.selectedSpring}`)
+
             let springsIndex = this.selectedSpring.index
             this.springs.splice(springsIndex,1)
+            this.selectedSpring = null
         }
     }
 
@@ -259,8 +262,8 @@ export class Game {
     for (let j = 0; j < this.springs.length; j++){
         let springer =this.springs[j]
         if(!this.springs[j].outsideBox(this.mouseCoords)){
-            console.log("inside");
-            console.log(this.springs[j].distanceFrom(this.mouseCoords))
+            // console.log("inside");
+            // console.log(this.springs[j].distanceFrom(this.mouseCoords))
             
             if(this.springs[j].distanceFrom(this.mouseCoords) < 10){ 
                 this.selectedSpring = this.springs[j]
