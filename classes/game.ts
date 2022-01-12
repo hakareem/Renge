@@ -16,9 +16,10 @@ export class Game {
     cursor:Vector = new Vector(0,0)
     downMass:Mass|null= null
     upMass:Mass|null= null 
-
+    mode: number=0
     massRadius=9
     gravityOn:boolean=false
+    editMode:boolean = false
     // rect:CanvasRect;
     ground = 700
     mouseCoords = new Vector(0, 0)
@@ -43,6 +44,16 @@ export class Game {
         let container = document.createElement("div")
         document.body.appendChild(container)
         container.classList.add("container")
+
+        let container2 = document.createElement("div")
+        document.body.appendChild(container2)
+        container2.classList.add("container2")
+
+        // let showUi = document.createElement("button")
+        // container2.appendChild(showUi)
+        // showUi.innerHTML ="Edit Mode"
+        // showUi.classList.add("uI")
+        // showUi.addEventListener("click",()=>{this.toggleMode();showUi.innerHTML = this.editMode?"Game Mode":"Edit Mode"})
 
         let button= document.createElement("button")
         button.classList.add("btn")
@@ -145,6 +156,20 @@ export class Game {
         
         
         console.log("gravity"+ this.gravityOn)
+    }
+
+     toggleMode(game:Game){
+        this.editMode=!this.editMode
+        const targetContainer = document.getElementsByTagName("div")[0]
+        
+        if(this.editMode == true){
+            targetContainer.style.display = "none"
+            console.log("true: Game Mode"); 
+            // game.drawGrid(1) == null
+        } else {    
+            targetContainer.style.display = "flex"
+            console.log("false: Edit Mode");
+        }
     }
 
     massAtPoint(p:Vector){
@@ -274,6 +299,16 @@ export class Game {
         
     }
 }
+
+// changeMode(){
+//     this.mode = (this.mode + 1)%2
+//     if (this.mode === 0){
+//         (<HTMLInputElement>document.querySelector(".modeBtn")).value= "Edit Mode"
+//     }
+//     if (this.mode === 1){
+//         (<HTMLInputElement>document.querySelector(".modeBtn")).value= "Play Mode"
+//     }
+// }
 
 reset(){
     this.masses = []
