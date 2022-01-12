@@ -2,6 +2,7 @@
 import { Vector } from "./vector.js";
 import { Mass } from "./mass.js";
 import { Spring } from "./spring.js";
+import { Sound } from "./sounds.js";
 
 //save branch
 export class Game {
@@ -117,6 +118,7 @@ export class Game {
             let springsIndex = this.selectedSpring.index
             this.springs.splice(springsIndex,1)
             this.selectedSpring = null
+            //  Sound.play("soundFall", 0.01);
         }
     }
 
