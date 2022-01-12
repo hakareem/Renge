@@ -68,6 +68,12 @@ export class Game {
         loadButton.innerHTML ="Load Level"
         document.body.appendChild(loadButton)
         loadButton.addEventListener("click", ()=>this.loadLevel() )
+
+        let removeButton = document.createElement("button")
+        removeButton.classList.add("remove-spring")
+        removeButton.innerHTML ="Remove Spring"
+        document.body.appendChild(removeButton)
+        removeButton.addEventListener("click", ()=>this.removeSpring() )
     }   
 
     saveLevel(){
