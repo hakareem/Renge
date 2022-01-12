@@ -20,18 +20,18 @@ export class Game {
     massRadius=9
     gravityOn:boolean=false
     // rect:CanvasRect;
-    ground = 900
+    ground = 700
     mouseCoords = new Vector(0, 0)
     selectedSpring: Spring | null = null 
+    
 
     constructor(width:number,height:number){
         this.canvas = document.createElement('canvas')
         this.canvas.classList.add("canvas")
         this.ctx = this.canvas.getContext('2d')!
         document.body.appendChild(this.canvas)
-        this.canvas.width = width
-        this.canvas.height = height
-
+        
+        this.resize(width, height)
         // this.rect = this.canvas.getBoundingClientRect()
         this.canvas.addEventListener('mousedown',(e) => this.mouseDown(e))
         this.canvas.addEventListener('mouseup',(e) => this.mouseUp(e))
@@ -40,34 +40,49 @@ export class Game {
         //requestAnimationFrame(this.cycle)
         this.cycle()
 
+        let container = document.createElement("div")
+        document.body.appendChild(container)
+        container.classList.add("container")
+
         let button= document.createElement("button")
         button.classList.add("btn")
-        button.innerHTML ="Gravity"
-        document.body.appendChild(button)
-        button.addEventListener("click",()=> this.toggleGravity())
+        button.innerText = "Gravity Off"
+        container.appendChild(button)
+        button.addEventListener("click",()=> {this.toggleGravity();button.innerHTML = this.gravityOn?"Gravity On":"Gravity Off"})
+
 
         let undo = document.createElement("button")
         undo.classList.add("undo")
         undo.innerHTML = "Undo Last Move"
-        document.body.appendChild(undo)
+        container.appendChild(undo)
         // undo.addEventListener("click", ()=> this.undoLastMove())
 
         let restart = document.createElement("button")
         restart.classList.add("restart")
         restart.innerHTML ="Reset Game"
-        document.body.appendChild(restart)
+        container.appendChild(restart)
         restart.addEventListener("click", ()=>this.reset() )
+
+        let saveInput= document.createElement("input")
+        saveInput.id="saveInput"
+        saveInput.placeholder="Save Level Name"
+        container.appendChild(saveInput)
 
         let saveButton = document.createElement("button")
         saveButton.classList.add("save")
         saveButton.innerHTML ="Save Level"
-        document.body.appendChild(saveButton)
+        container.appendChild(saveButton)
         saveButton.addEventListener("click", ()=>this.saveLevel() )
+
+        let loadInput = document.createElement("input")
+        loadInput.id="loadInput"
+        loadInput.placeholder="Load Level Name"
+        container.appendChild(loadInput)
 
         let loadButton = document.createElement("button")
         loadButton.classList.add("load")
         loadButton.innerHTML ="Load Level"
-        document.body.appendChild(loadButton)
+        container.appendChild(loadButton)
         loadButton.addEventListener("click", ()=>this.loadLevel() )
 
         // let removeButton = document.createElement("button")
@@ -85,6 +100,12 @@ export class Game {
         }
     }
 
+    resize(width:number, height:number){
+        this.canvas.width = width
+        this.canvas.height = height
+        this.ground = 7/9 * height
+    }
+
     saveLevel(){
         //we have a bunch of masses and springs
         //we want to save them how they "look" on the screen
@@ -92,12 +113,12 @@ export class Game {
 
 
         //localStorage.setItem("masses",JSON.stringify(this.masses[0].position))
-        localStorage.setItem("Game",JSON.stringify(this))
+        localStorage.setItem((<HTMLInputElement>document.getElementById("saveInput")).value,JSON.stringify(this))
     }
 
     loadLevel(){
         
-        let dataString:string|null=localStorage.getItem("Game")
+        let dataString:string|null=localStorage.getItem((<HTMLInputElement>document.getElementById("loadInput")).value)
         let loaded:Game= JSON.parse(dataString!) //you now need to remake springs and masses based on the loaded data
         this.masses=[]
         this.springs=[]
@@ -116,7 +137,9 @@ export class Game {
     }
 
     toggleGravity(){
-        this.gravityOn=!this.gravityOn;  //switches between off and on the = !
+
+        this.gravityOn=!this.gravityOn //switches between off and on the = !
+        
         
         console.log("gravity"+ this.gravityOn)
     }
@@ -138,6 +161,7 @@ export class Game {
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
         this.ctx.fillStyle = "red"
         this.ctx.fillRect(0,this.ground,this.canvas.width, this.canvas.height)
+        this.drawGrid(100);
         this.ctx.beginPath()
         for (let i=0;i<this.masses.length;i++){
             this.masses[i].draw(this)
@@ -160,10 +184,27 @@ export class Game {
             this.ctx.lineTo(this.selectedSpring?.b.position.x, this.selectedSpring?.b.position.y)
             this.ctx.stroke()
         }
-
+        
     requestAnimationFrame(()=> this.cycle()) 
     }
-
+     drawGrid(size:number) {
+          
+        this.ctx.strokeStyle = "rgba(0,0,255,0.2)" 
+        for (let x=0;x<=this.canvas.width;x+=size) {
+            //draw vertical lines
+            this.ctx.moveTo(x, 0);
+            this.ctx.lineTo(x, this.canvas.height);
+        }
+        for (let y=0;y<=this.canvas.height;y+=size) {
+            //draw horizontal lines
+            this.ctx.moveTo(0, y);
+            this.ctx.lineTo(this.canvas.width, y);
+            
+        };
+         this.ctx.stroke();
+         
+    }
+    
     mouseDown(e:MouseEvent){
         // this.mouseMove(e.clientX,e.clientY)
         this.mouseDownPoint = new Vector(e.clientX,e.clientY)
@@ -192,8 +233,9 @@ export class Game {
             this.upMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0)) //new Vector(0,0))
             //this.masses.push(this.upMass)
         }
-            this.springs.push(new Spring(this,0.1,this.downMass!,this.upMass))
-        
+        if (this.downMass != this.upMass){
+            this.springs.push( new Spring(this,0.1,this.downMass!,this.upMass))
+        }
 
         //mass.draw(this)
         // this.ctx?.moveTo(this.mouseDownPoint.x,this.mouseDownPoint.y)
@@ -211,24 +253,28 @@ export class Game {
     // this.mouseY = e.clientY - this.rect.top
     // }
 
-    
+ 
     mouseMove(e:MouseEvent){
     this.mouseCoords = new Vector(e.clientX,e.clientY)
     for (let j = 0; j < this.springs.length; j++){
+        let springer =this.springs[j]
         if(!this.springs[j].outsideBox(this.mouseCoords)){
             console.log("inside");
             console.log(this.springs[j].distanceFrom(this.mouseCoords))
             
             if(this.springs[j].distanceFrom(this.mouseCoords) < 10){ 
                 this.selectedSpring = this.springs[j]
+                // this.springs.splice(1)
+                }
             }
 
-        }
+        
     }
 }
 
 reset(){
     this.masses = []
     this.springs = []
-}
+    this.selectedSpring=null
+    }
 }
