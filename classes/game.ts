@@ -36,6 +36,7 @@ export class Game {
         this.canvas.addEventListener('mousedown',(e) => this.mouseDown(e))
         this.canvas.addEventListener('mouseup',(e) => this.mouseUp(e))
         this.canvas.addEventListener('mousemove',(e) => this.mouseMove(e))
+        this.canvas.addEventListener('keydown',(e)=> this.removeSelectedSpring(e))
         //requestAnimationFrame(this.cycle)
         this.cycle()
 
@@ -69,15 +70,16 @@ export class Game {
         document.body.appendChild(loadButton)
         loadButton.addEventListener("click", ()=>this.loadLevel() )
 
-        let removeButton = document.createElement("button")
-        removeButton.classList.add("remove-spring")
-        removeButton.innerHTML ="Remove Spring"
-        document.body.appendChild(removeButton)
-        removeButton.addEventListener("click", ()=>this.removeSelectedSpring() )
+        // let removeButton = document.createElement("button")
+        // removeButton.classList.add("remove-spring")
+        // removeButton.innerHTML ="Remove Spring"
+        // document.body.appendChild(removeButton)
+        // removeButton.addEventListener("click", ()=>this.removeSelectedSpring() )
     }   
 
-    removeSelectedSpring(){
-        if(this.selectedSpring){
+    removeSelectedSpring(e:KeyboardEvent){
+        
+        if(this.selectedSpring && e.key == "Delete"){
             let springsIndex = this.selectedSpring.index
             this.springs.splice(springsIndex,1)
         }
