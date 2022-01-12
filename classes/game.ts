@@ -36,7 +36,7 @@ export class Game {
         this.canvas.addEventListener('mousedown',(e) => this.mouseDown(e))
         this.canvas.addEventListener('mouseup',(e) => this.mouseUp(e))
         this.canvas.addEventListener('mousemove',(e) => this.mouseMove(e))
-        // this.canvas.addEventListener("dblclick",(e)=>this.removeSpring(e))
+        window.addEventListener('keydown',(e)=> this.removeSelectedSpring(e))
         //requestAnimationFrame(this.cycle)
         this.cycle()
 
@@ -85,25 +85,28 @@ export class Game {
         container.appendChild(loadButton)
         loadButton.addEventListener("click", ()=>this.loadLevel() )
 
-        let removeButton = document.createElement("button")
-        removeButton.classList.add("remove-spring")
-        removeButton.innerHTML ="Remove Spring"
-        container.appendChild(removeButton)
-        removeButton.addEventListener("click", ()=>this.removeSelectedSpring() )
+        // let removeButton = document.createElement("button")
+        // removeButton.classList.add("remove-spring")
+        // removeButton.innerHTML ="Remove Spring"
+        // document.body.appendChild(removeButton)
+        // removeButton.addEventListener("click", ()=>this.removeSelectedSpring() )
     }   
+
+    removeSelectedSpring(e:KeyboardEvent){
+        console.log(`key pressed: ${e.key}`)
+        if(this.selectedSpring && e.key == "Delete"){
+            console.log(`Deleted ${this.selectedSpring}`)
+
+            let springsIndex = this.selectedSpring.index
+            this.springs.splice(springsIndex,1)
+            this.selectedSpring = null
+        }
+    }
 
     resize(width:number, height:number){
         this.canvas.width = width
         this.canvas.height = height
         this.ground = 7/9 * height
-    }
-
-    removeSelectedSpring(){
-        if(this.selectedSpring){
-            let springsIndex = this.selectedSpring.index
-            this.springs.splice(springsIndex,1)
-            this.selectedSpring=null
-        }
     }
 
     saveLevel(){
@@ -259,8 +262,8 @@ export class Game {
     for (let j = 0; j < this.springs.length; j++){
         let springer =this.springs[j]
         if(!this.springs[j].outsideBox(this.mouseCoords)){
-            console.log("inside");
-            console.log(this.springs[j].distanceFrom(this.mouseCoords))
+            // console.log("inside");
+            // console.log(this.springs[j].distanceFrom(this.mouseCoords))
             
             if(this.springs[j].distanceFrom(this.mouseCoords) < 10){ 
                 this.selectedSpring = this.springs[j]
