@@ -20,7 +20,7 @@ export class Game {
     massRadius=9
     gravityOn:boolean=false
     // rect:CanvasRect;
-    ground = 900
+    ground = 700
     mouseCoords = new Vector(0, 0)
     selectedSpring: Spring | null = null 
     
@@ -30,9 +30,8 @@ export class Game {
         this.canvas.classList.add("canvas")
         this.ctx = this.canvas.getContext('2d')!
         document.body.appendChild(this.canvas)
-        this.canvas.width = width
-        this.canvas.height = height
-
+        
+        this.resize(width, height)
         // this.rect = this.canvas.getBoundingClientRect()
         this.canvas.addEventListener('mousedown',(e) => this.mouseDown(e))
         this.canvas.addEventListener('mouseup',(e) => this.mouseUp(e))
@@ -92,6 +91,12 @@ export class Game {
         container.appendChild(removeButton)
         removeButton.addEventListener("click", ()=>this.removeSelectedSpring() )
     }   
+
+    resize(width:number, height:number){
+        this.canvas.width = width
+        this.canvas.height = height
+        this.ground = 7/9 * height
+    }
 
     removeSelectedSpring(){
         if(this.selectedSpring){
