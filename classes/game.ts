@@ -22,7 +22,8 @@ export class Game {
     // rect:CanvasRect;
     ground = 700
     mouseCoords = new Vector(0, 0)
-    selectedSpring: Spring | null = null 
+    selectedSpring: Spring | null = null
+    lastSpring:Spring | null = null
     
 
     constructor(width:number,height:number){
@@ -37,6 +38,9 @@ export class Game {
         this.canvas.addEventListener('mouseup',(e) => this.mouseUp(e))
         this.canvas.addEventListener('mousemove',(e) => this.mouseMove(e))
         window.addEventListener('keydown',(e)=> this.removeSelectedSpring(e))
+        window.addEventListener('keydown',(e)=> this.undoLastMove(e))
+
+
         //requestAnimationFrame(this.cycle)
         this.cycle()
 
@@ -100,6 +104,14 @@ export class Game {
             let springsIndex = this.selectedSpring.index
             this.springs.splice(springsIndex,1)
             this.selectedSpring = null
+        }
+    }
+
+    undoLastMove(e:KeyboardEvent){
+        if(e.key == "Backspace"){
+            let lastSpring = this.springs.pop()
+            this.lastSpring = null
+            
         }
     }
 
