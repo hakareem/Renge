@@ -52,7 +52,7 @@ export class Game {
         let audio = document.createElement("audio")
         audio.src="music/two.mp3"
         audio.play()
-        audio.volume = 0.03
+        audio.volume = 0.05
 
         this.setupMassPics();
 
