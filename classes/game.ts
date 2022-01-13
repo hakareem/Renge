@@ -192,7 +192,7 @@ export class Game {
         modes.addEventListener("click",()=>{this.toggleMode(this);modes.innerHTML = this.editMode?"Game Mode":"Edit Mode"})
 
         let loser = document.createElement("div")
-        document.body.appendChild(loser)
+        container.appendChild(loser)
         loser.classList.add("loser")
         loser.id = "loser"
  
@@ -204,7 +204,7 @@ export class Game {
  
         let write = document.createElement("p")
         write.classList.add("write")
-        write.innerHTML = "You are a Loser."
+        write.innerHTML = "You Lost"
         loser.appendChild(write)
 
     }   
@@ -221,8 +221,8 @@ export class Game {
     }
     hideLoser(){
         const targetCon = document.getElementById("loser")
-        targetCon!.style.display ="none"
-        this.loadLevel()
+        targetCon!.style.visibility = "hidden"
+        // this.loadLevel()
     
     }
 
@@ -356,7 +356,15 @@ export class Game {
         return null
     }
 
+       loserLine(){
+        // this.ctx.strokeStyle = "rgba(0,0,100,0.8)"
+        this.ctx.strokeStyle = "red"
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, 450);
+        this.ctx.lineTo(this.canvas.width, 450);
+        this.ctx.stroke();
     
+    };
 
 
     cycle(){
@@ -366,7 +374,7 @@ export class Game {
         if(this.editMode == false){
         this.drawGrid(this.ground / 7);
         }
-
+        this.loserLine()
         this.drawMasses()
         this.drawSprings()
         // this.stretchSprings()
@@ -460,15 +468,16 @@ export class Game {
     
     mouseDown(e:MouseEvent){
         // this.mouseMove(e.clientX,e.clientY)
-         if(this.editMode == true){
+        if(this.editMode == false){
+
         this.mouseDownPoint = new Vector(e.clientX,e.clientY)
         this.isActive = true
         let map= this.massAtPoint(this.mouseDownPoint)
         if(map){
             this.downMass=map
         }
-    }
         else{
+
             this.downMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0))
             Sound.play("wood1", 0.1);
             
@@ -476,15 +485,14 @@ export class Game {
             //this.masses.push(this.downMass)
             // this.springs.push(new Spring(0.1,this.downMass!,this.downMass))
 
-        }
-
-       
+        }}
+    
         
        // mass.draw(this)
-       
     }
     mouseUp(e:MouseEvent){
-         if(this.editMode == false){
+    if(this.editMode == false){
+
         this.mouseUpPoint= new Vector(e.clientX,e.clientY)
         this.isActive = false
         let map= this.massAtPoint(this.mouseUpPoint)
@@ -499,11 +507,14 @@ export class Game {
             //new Vector(0,0))
             //this.masses.push(this.upMass)
         }
+
         if (this.downMass != this.upMass){
+        
+
             this.springs.push( new Spring(this,0.1,this.downMass!,this.upMass))
         }
+        }
 
-    }
         
         //mass.draw(this)
         // this.ctx?.moveTo(this.mouseDownPoint.x,this.mouseDownPoint.y)
