@@ -53,6 +53,22 @@ export class Game {
 
         this.cycle()
 
+        
+        let intro = document.createElement("div")
+        document.body.appendChild(intro)
+        intro.classList.add("intro")
+
+        let introBtn = document.createElement("button")
+        introBtn.classList.add("introBtn")
+        introBtn.innerHTML = "Go to game"
+        intro.appendChild(introBtn)
+        introBtn.addEventListener("click", ()=>this.displayGame())
+
+        let text = document.createElement("p")
+        text.classList.add("Text")
+        text.innerHTML = "Welcome to Renge"
+        intro.appendChild(text)
+
         let container = document.createElement("div")
         document.body.appendChild(container)
         container.classList.add("container")
@@ -189,6 +205,8 @@ export class Game {
         this.ground = 7/9 * height
     }
 
+    
+
     saveLevel(){
         //we have a bunch of masses and springs
         //we want to save them how they "look" on the screen
@@ -236,6 +254,16 @@ export class Game {
         }
     }
     
+    displayGame(){
+        const targetContainer = document.getElementsByTagName("div")[0]
+        if(targetContainer.style.display!=="none"){
+            targetContainer.style.display = 'none'
+        }
+        
+    }
+
+
+
     toggleGravity(){
 
         this.gravityOn=!this.gravityOn //switches between off and on the = !
@@ -246,7 +274,7 @@ export class Game {
 
      toggleMode(game:Game){
         this.editMode=!this.editMode
-        const targetContainer = document.getElementsByTagName("div")[0]
+        const targetContainer = document.getElementsByTagName("div")[1]
         
         if(this.editMode == true){
             targetContainer.style.display = "none"
