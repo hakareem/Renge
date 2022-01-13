@@ -29,7 +29,7 @@ export class Game {
     easy:string[]=[]
     medium:string[]=[]
     
-    
+    gameOver: boolean = false
     massPics: string[] = [];
 
 
@@ -191,6 +191,22 @@ export class Game {
         container2.appendChild(modes)
         modes.addEventListener("click",()=>{this.toggleMode(this);modes.innerHTML = this.editMode?"Game Mode":"Edit Mode"})
 
+        let loser = document.createElement("div")
+        document.body.appendChild(loser)
+        loser.classList.add("loser")
+        loser.id = "loser"
+ 
+        let loserBtn = document.createElement("button")
+        loserBtn.classList.add("loserBtn")
+        loserBtn.innerHTML = "Go back to the game Loser."
+        loser.appendChild(loserBtn)
+        loserBtn.addEventListener("click",()=>this.hideLoser())
+ 
+        let write = document.createElement("p")
+        write.classList.add("write")
+        write.innerHTML = "You are a Loser."
+        loser.appendChild(write)
+
     }   
 
     setupMassPics() {
@@ -199,6 +215,16 @@ export class Game {
     this.massPics.push("pics/3.png");
     }
 
+    displayLoser(){
+        const targetCon = document.getElementById("loser")
+            targetCon!.style.display ="block"
+    }
+    hideLoser(){
+        const targetCon = document.getElementById("loser")
+        targetCon!.style.display ="none"
+        this.loadLevel()
+    
+    }
 
 
     removeSelectedSpring(e:KeyboardEvent){
@@ -353,6 +379,28 @@ export class Game {
             this.ctx.lineTo(this.selectedSpring?.b.position.x, this.selectedSpring?.b.position.y)
             this.ctx.stroke()
         }
+
+        this.gameOver = true
+        for (let i=0;i<this.masses.length;i++){
+            this.masses[i].draw(this)
+            this.masses[i].move(this)
+            if(this.gravityOn){
+                this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
+                this.masses[i].velocity.multiplyIn(0.97)
+            }
+            if(this.masses[i].position.y < 450){
+            this.gameOver = false
+            }
+        }
+        if(this.gameOver && this.gravityOn){
+            this.displayLoser()
+        }
+        // for (let i=0; i <this.springs.length;i++){
+        //     this.springs[i].drawSpring(this)
+        //     this.springs[i].stretch(this)
+ 
+        // }
+
         
     requestAnimationFrame(()=> this.cycle()) 
     }

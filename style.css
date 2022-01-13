@@ -194,3 +194,40 @@ canvas {
 
 	font-family:sans-serif;
 }		
+
+.loser {
+   position: absolute;
+    top: 1px;
+    right: 1px;
+    justify-content: space-evenly;
+    background-color: black;
+    width: 105vw;
+    height: 105vh;
+    display:none;
+    z-index: 1;
+  }
+ 
+  .loserBtn{
+   margin: 0;
+   position: absolute;
+   top: 50%;
+   left:50%;
+   -ms-transform: translateX(-50%) translateY(-50%);
+   transform: translateX(-50%) translateY(-50%);
+   width: 500px;
+   height: 100px;
+   background-color: black;
+   color: white;
+   /* z-index: 0; */
+   border-radius:20px;
+  }
+  .loserBtn:hover{
+   background-color: red;
+  }
+  .write{
+   font-size: 75px;
+   font-family: fantasy;
+   color: white;
+   text-align: center;
+  }
+
