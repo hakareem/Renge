@@ -317,7 +317,10 @@ export class Game {
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
         this.ctx.fillStyle = "red"
         this.ctx.fillRect(0,this.ground,this.canvas.width, this.canvas.height)
-        this.drawGrid(100);
+        if(this.editMode == false){
+        this.drawGrid(this.ground / 7);
+        }
+
         this.drawMasses()
         this.moveMasses() //this also does gravity and drag
         this.drawSprings()
