@@ -52,7 +52,7 @@ export class Spring{
     game.ctx.lineWidth = 7
     game.ctx.lineCap  ="round"
     let tension = this.length / this.restLength
-    if(tension > 1.15 || tension < 0.85){
+    if(tension > 1.23 || tension < 0.77){
         this.broken = true 
         // console.log("spring broken");
         
