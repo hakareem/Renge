@@ -44,7 +44,7 @@ export class Spring{
     return this.a.position.distanceFrom(this.b.position)
     }
 
-    drawSpring(game:Game){
+    draw(game:Game){
     if(this.broken){
         return
     }

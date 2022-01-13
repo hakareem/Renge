@@ -129,8 +129,8 @@ export class Game {
 
     undoLastMove(e:KeyboardEvent){
         if(e.key == "Backspace"){
-            let lastSpring = this.springs.pop()
-            this.lastSpring = null
+            this.springs.pop()
+            this.selectedSpring = null
             
         }
     }
@@ -211,21 +211,11 @@ export class Game {
         this.ctx.fillStyle = "red"
         this.ctx.fillRect(0,this.ground,this.canvas.width, this.canvas.height)
         this.drawGrid(100);
-        this.ctx.beginPath()
-        for (let i=0;i<this.masses.length;i++){
-            this.masses[i].draw(this)
-            this.masses[i].move(this)
-            if(this.gravityOn){
-                this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
-                this.masses[i].velocity.multiplyIn(0.97)
-            }
-        }
-    
-        for (let i=0; i <this.springs.length;i++){
-            this.springs[i].drawSpring(this)
-            this.springs[i].stretch(this)
-
-        }
+        this.drawMasses()
+        this.moveMasses() //this also does gravity and drag
+        this.drawSprings()
+        this.stretchSprings()
+        
         if(this.selectedSpring){
             this.ctx.strokeStyle="cyan"
             this.ctx.beginPath()
@@ -239,6 +229,8 @@ export class Game {
      drawGrid(size:number) {
           
         this.ctx.strokeStyle = "rgba(0,0,255,0.2)" 
+        this.ctx.lineWidth = 1
+        this.ctx.beginPath()
         for (let x=0;x<=this.canvas.width;x+=size) {
             //draw vertical lines
             this.ctx.moveTo(x, 0);
@@ -252,6 +244,47 @@ export class Game {
         };
          this.ctx.stroke();
          
+    }
+
+    moveMasses(){
+        for (let i=0;i<this.masses.length;i++){
+            this.masses[i].move(this)
+            if(this.gravityOn){
+                this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
+                this.masses[i].velocity.multiplyIn(0.97)
+            }
+        }
+    }
+
+
+    drawMasses(){
+        this.ctx.lineWidth = 3 ;
+        this.ctx.strokeStyle = "magenta"
+        this.ctx.beginPath()
+            // "rgba(" +
+            // this.highlight[0] +
+            // "," +
+            // this.highlight[1] +
+            // "," +
+            // this.highlight[2] +
+            // ",0.5)";
+        
+        for (let i=0;i<this.masses.length;i++){
+            this.masses[i].draw(this)
+        }
+        this.ctx.stroke()
+    }
+
+    drawSprings(){
+        for (let i=0; i <this.springs.length;i++){
+            this.springs[i].draw(this)
+        }
+    }
+
+    stretchSprings(){
+        for (let i=0; i <this.springs.length;i++){
+            this.springs[i].stretch(this)
+        }
     }
     
     mouseDown(e:MouseEvent){
