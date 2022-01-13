@@ -11,7 +11,7 @@ export class Game {
     isActive:boolean = false;
     mouseDownPoint:Vector = new Vector(0,0);
     mouseUpPoint:Vector=new Vector(0,0)
-    gravity:Vector=new Vector(0,0.1)
+    gravity:Vector=new Vector(0,0.05)
     springs:Spring[]=[]
     masses:Mass[]=[]
     cursor:Vector = new Vector(0,0)
@@ -60,6 +60,12 @@ export class Game {
 
         this.cycle()
         
+        setInterval(()=>{
+            for(let i=0 ; i< 5; i++){
+                this.stretchSprings();
+                this.moveMasses() 
+            }
+        }, 10)
 
 
         
@@ -331,9 +337,9 @@ export class Game {
         }
 
         this.drawMasses()
-        this.moveMasses() //this also does gravity and drag
         this.drawSprings()
-        this.stretchSprings()
+        // this.stretchSprings()
+        // this.moveMasses() //this also does gravity and drag
         
         if(this.selectedSpring){
             this.ctx.strokeStyle="cyan"
@@ -345,6 +351,8 @@ export class Game {
         
     requestAnimationFrame(()=> this.cycle()) 
     }
+
+    
      drawGrid(size:number) {
           
         this.ctx.strokeStyle = "rgba(0,0,255,0.2)" 
