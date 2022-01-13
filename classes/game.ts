@@ -160,8 +160,8 @@ export class Game {
     }
 
     loadLevel(){
-        
-        let dataString:string|null=localStorage.getItem((<HTMLInputElement>document.getElementById("loadInput")).value)
+        let levelName = (<HTMLInputElement>document.getElementById("loadInput")).value
+        let dataString:string|null=localStorage.getItem(levelName)
         let loaded:Game= JSON.parse(dataString!) //you now need to remake springs and masses based on the loaded data
         this.masses=[]
         this.springs=[]
@@ -195,6 +195,8 @@ export class Game {
     hideLoser(){
         const targetCon = document.getElementById("loser")
             targetCon!.style.display ="none"
+            this.loadLevel()
+            
     }
 
      toggleMode(game:Game){
