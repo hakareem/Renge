@@ -121,7 +121,7 @@ export class Game {
         loserBtn.classList.add("loserBtn")
         loserBtn.innerHTML = "Go back to the game Loser."
         loser.appendChild(loserBtn)
-        loserBtn.addEventListener("click", ()=>this.hideLoser())
+        loserBtn.addEventListener("click",()=>this.hideLoser())
 
         let write = document.createElement("p")
         write.classList.add("write")
@@ -190,12 +190,11 @@ export class Game {
     }
     displayLoser(){
         const targetCon = document.getElementById("loser")
-            targetCon!.style.display = "block"
+            targetCon!.style.display ="block"
     }
     hideLoser(){
         const targetCon = document.getElementById("loser")
-            targetCon!.style.display = "none"
-            this.reset();
+            targetCon!.style.display ="none"
     }
 
      toggleMode(game:Game){
@@ -241,8 +240,7 @@ export class Game {
                 this.masses[i].velocity.multiplyIn(0.97)
             }
             if(this.masses[i].position.y < 450){
-               this.gameOver = false
-            //this.displayLoser()
+            this.gameOver = false
             }
         }
         if(this.gameOver && this.gravityOn){
