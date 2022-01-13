@@ -23,6 +23,8 @@ export class Game {
     ground = 900
     mouseCoords = new Vector(0, 0)
     selectedSpring: Spring | null = null 
+    levels:string[]=["Pyramid","Tank", "Rocket","Bridge", "Tower"]
+    
     
 
     constructor(width:number,height:number){
@@ -80,6 +82,33 @@ export class Game {
         loadInput.placeholder="Load Level Name"
         container.appendChild(loadInput)
 
+        // this.level=["pyramid","tank"]
+
+        // for(let i=0;i<this.level.length;i++){
+            
+        // }
+
+        let dd=document.createElement("select")
+        dd.setAttribute("name","select")
+        dd.setAttribute("id","dd")
+        dd.setAttribute("size","1")
+        container.appendChild(dd)
+
+        this.levels
+        for(let i=0;i<this.levels.length;i++){
+            let option= document.createElement("option")
+            option.setAttribute("value",this.levels[i])
+            option.setAttribute("selected","selected")
+            option.innerHTML=this.levels[i]
+            dd.appendChild(option)
+        }
+
+
+        // for(let type in this.levels){
+        //     this.levels.options
+        // }
+
+
         let loadButton = document.createElement("button")
         loadButton.classList.add("load")
         loadButton.innerHTML ="Load Level"
@@ -91,6 +120,12 @@ export class Game {
         removeButton.innerHTML ="Remove Spring"
         container.appendChild(removeButton)
         removeButton.addEventListener("click", ()=>this.removeSelectedSpring() )
+
+        // let levelOne= document.createElement("button")
+        // levelOne.id="levelOne"
+        // levelOne.innerHTML="Level 1- Pyramid"
+        // levelOne.addEventListener("click", ()=>this.loadLevelOne())
+        // container.appendChild(levelOne)
     }   
 
     removeSelectedSpring(){
@@ -111,18 +146,19 @@ export class Game {
         localStorage.setItem((<HTMLInputElement>document.getElementById("saveInput")).value,JSON.stringify(this))
     }
 
-    loadLevel(){
+    async loadLevel(){
         
-        let dataString:string|null=localStorage.getItem((<HTMLInputElement>document.getElementById("loadInput")).value)
-        let loaded:Game= JSON.parse(dataString!) //you now need to remake springs and masses based on the loaded data
+        // let dataString:string|null=localStorage.getItem((<HTMLInputElement>document.getElementById("loadInput")).value)
+        // let loaded:Game= JSON.parse(dataString!) //you now need to remake springs and masses based on the loaded data
+        
+        let levelName=(<HTMLSelectElement>document.getElementById("dd")).value
+        console.log(levelName)
+        let loaded:Game=await this.fetchObject(`levels/${levelName}.json`)
         this.masses=[]
         this.springs=[]
         for (let i=0;i<loaded.masses.length;i++){
             let m = loaded.masses[i]
-            new Mass(this,Vector.create( m.position),Vector.create(m.velocity))
-
-            
-            
+            new Mass(this,Vector.create( m.position),Vector.create(m.velocity))  
         }
      
         for (let i=0;i<loaded.springs.length;i++){
@@ -131,6 +167,22 @@ export class Game {
         }
     }
 
+    
+
+
+    async fetchObject(url: string) {
+        const method = "GET"
+        const headers = { 'Accept': 'text/html', 'Content-Type': 'application/json' }
+        const response = await fetch(url, { method: method, headers: headers })
+        //const response = await fetch(url, {method:method,headers:{'Accept':'text/html','Content-Type':'application/json'}})
+        if (response.ok) {
+            return await response.json()
+        }
+        else {
+            console.log(`unexpected response status ${response.status} + ${response.statusText}`)
+        }
+    }
+    
     toggleGravity(){
 
         this.gravityOn=!this.gravityOn //switches between off and on the = !
@@ -273,3 +325,5 @@ reset(){
     this.selectedSpring=null
     }
 }
+
+
