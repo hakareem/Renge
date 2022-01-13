@@ -198,7 +198,7 @@ export class Game {
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
         this.ctx.fillStyle = "red"
         this.ctx.fillRect(0,this.ground,this.canvas.width, this.canvas.height)
-        this.drawGrid(100);
+        this.drawGrid(this.ground / 5);
         this.ctx.beginPath()
         for (let i=0;i<this.masses.length;i++){
             this.masses[i].draw(this)
@@ -235,8 +235,7 @@ export class Game {
         for (let y=0;y<=this.canvas.height;y+=size) {
             //draw horizontal lines
             this.ctx.moveTo(0, y);
-            this.ctx.lineTo(this.canvas.width, y);
-            
+            this.ctx.lineTo(this.canvas.width, y);   
         };
          this.ctx.stroke();
          
