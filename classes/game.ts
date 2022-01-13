@@ -28,6 +28,8 @@ export class Game {
     levels:string[]=["Pyramid","Tank", "Rocket","Bridge", "Tower"]
     
     
+    massPics: string[] = [];
+
 
     constructor(width:number,height:number){
         this.canvas = document.createElement('canvas')
@@ -42,7 +44,10 @@ export class Game {
         this.canvas.addEventListener('mousemove',(e) => this.mouseMove(e))
         window.addEventListener('keydown',(e)=> this.removeSelectedSpring(e))
         //requestAnimationFrame(this.cycle)
-        Sound.setup(["remove", "wood1", "wood2"]);
+        Sound.setup(["remove", "wood1", "wood2", "switchMode", "removeSpring","gravityOn"]);
+
+        this.setupMassPics();
+
         this.cycle()
 
         let container = document.createElement("div")
@@ -63,7 +68,8 @@ export class Game {
         button.classList.add("btn")
         button.innerText = "Gravity Off"
         container.appendChild(button)
-        button.addEventListener("click",()=> {this.toggleGravity();button.innerHTML = this.gravityOn?"Gravity On":"Gravity Off"})
+        Sound.play("gravityOn", 0.1);
+        button.addEventListener("click",()=> {this.toggleGravity();button.innerHTML = this.gravityOn?"Gravity On":"Gravity Off"} )
 
 
         let undo = document.createElement("button")
@@ -138,7 +144,17 @@ export class Game {
         modes.innerHTML = "Edit Mode"
         container2.appendChild(modes)
         modes.addEventListener("click",()=>{this.toggleMode(this);modes.innerHTML = this.editMode?"Game Mode":"Edit Mode"})
+
     }   
+
+    setupMassPics() {
+    this.massPics.push("pics/1.png");
+    this.massPics.push("pics/2.png");
+    this.massPics.push("pics/3.png");
+    }
+
+
+
     removeSelectedSpring(e:KeyboardEvent){
         console.log(`key pressed: ${e.key}`)
         if(this.selectedSpring && e.key == "Delete"){
@@ -148,7 +164,7 @@ export class Game {
             this.springs.splice(springsIndex,1)
             this.selectedSpring = null
             
-            Sound.play("remove", 0.1);
+            Sound.play("removeSpring", 0.1);
         }
     }
 
@@ -219,11 +235,18 @@ export class Game {
         
         if(this.editMode == true){
             targetContainer.style.display = "none"
-            console.log("true: Game Mode"); 
-            // game.drawGrid(1) == null
+            console.log("true: Game Mode");
+            this.gravityOn = true
+            // game.drawGrid(1) 
+            Sound.play("switchMode", 0.1);
+    
+
         } else {    
             targetContainer.style.display = "flex"
             console.log("false: Edit Mode");
+            this.gravityOn = false
+            Sound.play("switchMode", 0.1);
+        
         }
     }
 
@@ -244,7 +267,10 @@ export class Game {
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
         this.ctx.fillStyle = "red"
         this.ctx.fillRect(0,this.ground,this.canvas.width, this.canvas.height)
-        this.drawGrid(this.ground / 5);
+        if(this.editMode === false){
+            this.drawGrid(this.ground / 5);
+        }
+
         this.ctx.beginPath()
         for (let i=0;i<this.masses.length;i++){
             this.masses[i].draw(this)
