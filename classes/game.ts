@@ -46,9 +46,16 @@ export class Game {
         //requestAnimationFrame(this.cycle)
         Sound.setup(["remove", "wood1", "wood2", "switchMode", "removeSpring","gravityOn"]);
 
+        let audio = document.createElement("audio")
+        audio.src="music/two.mp3"
+        audio.play()
+        audio.volume = 0.03
+
         this.setupMassPics();
 
         this.cycle()
+        
+
 
         let container = document.createElement("div")
         document.body.appendChild(container)
@@ -225,7 +232,7 @@ export class Game {
 
         this.gravityOn=!this.gravityOn //switches between off and on the = !
         
-        
+
         console.log("gravity"+ this.gravityOn)
     }
 
@@ -315,12 +322,14 @@ export class Game {
     
     mouseDown(e:MouseEvent){
         // this.mouseMove(e.clientX,e.clientY)
+         if(this.editMode == true){
         this.mouseDownPoint = new Vector(e.clientX,e.clientY)
         this.isActive = true
         let map= this.massAtPoint(this.mouseDownPoint)
         if(map){
             this.downMass=map
         }
+    }
         else{
             this.downMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0))
             Sound.play("wood1", 0.1);
@@ -330,16 +339,21 @@ export class Game {
             // this.springs.push(new Spring(0.1,this.downMass!,this.downMass))
 
         }
+
+       
+        
        // mass.draw(this)
        
     }
     mouseUp(e:MouseEvent){
+         if(this.editMode == false){
         this.mouseUpPoint= new Vector(e.clientX,e.clientY)
         this.isActive = false
         let map= this.massAtPoint(this.mouseUpPoint)
         if (map){
             this.upMass=map
         }
+    
         else{
             this.upMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0)) 
             Sound.play("wood2", 0.1);
@@ -351,6 +365,8 @@ export class Game {
             this.springs.push( new Spring(this,0.1,this.downMass!,this.upMass))
         }
 
+    }
+        
         //mass.draw(this)
         // this.ctx?.moveTo(this.mouseDownPoint.x,this.mouseDownPoint.y)
         // this.ctx!.lineTo(e.clientX,e.clientY)
