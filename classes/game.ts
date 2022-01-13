@@ -25,7 +25,6 @@ export class Game {
     ground = 700
     mouseCoords = new Vector(0, 0)
     selectedSpring: Spring | null = null
-    lastSpring:Spring | null = null
     
 
     constructor(width:number,height:number){
@@ -117,11 +116,15 @@ export class Game {
     removeSelectedSpring(e:KeyboardEvent){
         console.log(`key pressed: ${e.key}`)
         if(this.selectedSpring && e.key == "Delete"){
-            console.log(`Deleted ${this.selectedSpring}`)
+            console.log(`Deleted ${this.selectedSpring.index}`)
+            
+            console.log(`The spring array was: ${this.springs.length}`)
 
             let springsIndex = this.selectedSpring.index
-            this.springs.splice(springsIndex,1)
+            // this.springs.splice(springsIndex,1)
+            this.selectedSpring.broken = true
             this.selectedSpring = null
+            console.log(`The spring array is: ${this.springs.length}`)
             
             Sound.play("remove", 0.1);
         }
@@ -259,16 +262,8 @@ export class Game {
 
     drawMasses(){
         this.ctx.lineWidth = 3 ;
-        this.ctx.strokeStyle = "magenta"
-        this.ctx.beginPath()
-            // "rgba(" +
-            // this.highlight[0] +
-            // "," +
-            // this.highlight[1] +
-            // "," +
-            // this.highlight[2] +
-            // ",0.5)";
         
+            this.ctx.beginPath()
         for (let i=0;i<this.masses.length;i++){
             this.masses[i].draw(this)
         }
@@ -343,19 +338,20 @@ export class Game {
 
  
     mouseMove(e:MouseEvent){
-    this.mouseCoords = new Vector(e.clientX,e.clientY)
-    for (let j = 0; j < this.springs.length; j++){
-        let springer =this.springs[j]
-        if(!this.springs[j].outsideBox(this.mouseCoords)){
-            // console.log("inside");
-            // console.log(this.springs[j].distanceFrom(this.mouseCoords))
-            
-            if(this.springs[j].distanceFrom(this.mouseCoords) < 10){ 
-                this.selectedSpring = this.springs[j]
-                // this.springs.splice(1)
+        this.mouseCoords = new Vector(e.clientX,e.clientY)
+        for (let j = 0; j < this.springs.length; j++){
+            let s = this.springs[j]
+            if(!s.broken){
+                if(!s.outsideBox(this.mouseCoords)){
+                // console.log("inside");
+                // console.log(s.distanceFrom(this.mouseCoords))
+                
+                if(s.distanceFrom(this.mouseCoords) < 10){ 
+                    this.selectedSpring = s
+                    // this.springs.splice(1)
                 }
             }
-
+        }
         
     }
 }

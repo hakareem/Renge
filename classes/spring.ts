@@ -19,7 +19,7 @@ export class Spring{
         
         this.k=k
         this.restLength= this.a.position.distanceFrom(this.b.position)
-        this.index = game.springs.length
+        // this.index = game.springs.length
     }
 
     
