@@ -24,7 +24,8 @@ export class Game {
     // rect:CanvasRect;
     ground = 700
     mouseCoords = new Vector(0, 0)
-    selectedSpring: Spring | null = null 
+    selectedSpring: Spring | null = null
+    gameOver:boolean = false 
     
 
     constructor(width:number,height:number){
@@ -43,6 +44,7 @@ export class Game {
         Sound.setup(["remove", "wood1", "wood2"]);
         this.cycle()
 
+        
         let container = document.createElement("div")
         document.body.appendChild(container)
         container.classList.add("container")
@@ -109,6 +111,24 @@ export class Game {
         modes.innerHTML = "Edit Mode"
         container2.appendChild(modes)
         modes.addEventListener("click",()=>{this.toggleMode(this);modes.innerHTML = this.editMode?"Game Mode":"Edit Mode"})
+
+        let loser = document.createElement("div")
+        document.body.appendChild(loser)
+        loser.classList.add("loser")
+        loser.id = "loser"
+
+        let loserBtn = document.createElement("button")
+        loserBtn.classList.add("loserBtn")
+        loserBtn.innerHTML = "Go back to the game Loser."
+        loser.appendChild(loserBtn)
+        loserBtn.addEventListener("click", ()=>this.hideLoser())
+
+        let write = document.createElement("p")
+        write.classList.add("write")
+        write.innerHTML = "You are a Loser."
+        loser.appendChild(write)
+
+
     }   
     removeSelectedSpring(e:KeyboardEvent){
         console.log(`key pressed: ${e.key}`)
@@ -158,13 +178,24 @@ export class Game {
             this.springs.push(new Spring(this,0.1,this.masses[loaded.springs[i].a.index],this.masses[loaded.springs[i].b.index]))
         }
     }
+   
 
     toggleGravity(){
+
 
         this.gravityOn=!this.gravityOn //switches between off and on the = !
         
         
         console.log("gravity"+ this.gravityOn)
+    }
+    displayLoser(){
+        const targetCon = document.getElementById("loser")
+            targetCon!.style.display = "block"
+    }
+    hideLoser(){
+        const targetCon = document.getElementById("loser")
+            targetCon!.style.display = "none"
+            this.reset();
     }
 
      toggleMode(game:Game){
@@ -192,14 +223,16 @@ export class Game {
     }
 
     
-
+    
 
     cycle(){
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
         this.ctx.fillStyle = "red"
         this.ctx.fillRect(0,this.ground,this.canvas.width, this.canvas.height)
         this.drawGrid(100);
+        this.loserLine()
         this.ctx.beginPath()
+        this.gameOver = true
         for (let i=0;i<this.masses.length;i++){
             this.masses[i].draw(this)
             this.masses[i].move(this)
@@ -207,8 +240,14 @@ export class Game {
                 this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
                 this.masses[i].velocity.multiplyIn(0.97)
             }
+            if(this.masses[i].position.y < 450){
+               this.gameOver = false
+            //this.displayLoser()
+            }
         }
-    
+        if(this.gameOver && this.gravityOn){
+            this.displayLoser()
+        }
         for (let i=0; i <this.springs.length;i++){
             this.springs[i].drawSpring(this)
             this.springs[i].stretch(this)
@@ -241,7 +280,16 @@ export class Game {
          this.ctx.stroke();
          
     }
+    loserLine(){
+        this.ctx.strokeStyle = "rgba(0,0,100,0.8)"
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, 450);
+        this.ctx.lineTo(this.canvas.width, 450);
+        this.ctx.stroke();
     
+    };
+    
+
     mouseDown(e:MouseEvent){
         // this.mouseMove(e.clientX,e.clientY)
         this.mouseDownPoint = new Vector(e.clientX,e.clientY)
