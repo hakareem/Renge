@@ -2,6 +2,7 @@
 import { Vector } from "./vector.js";
 import { Mass } from "./mass.js";
 import { Spring } from "./spring.js";
+import { Sound } from "./sounds.js";
 
 //save branch
 export class Game {
@@ -16,9 +17,10 @@ export class Game {
     cursor:Vector = new Vector(0,0)
     downMass:Mass|null= null
     upMass:Mass|null= null 
-
+    mode: number=0
     massRadius=9
     gravityOn:boolean=false
+    editMode:boolean = false
     // rect:CanvasRect;
     ground = 700
     mouseCoords = new Vector(0, 0)
@@ -42,11 +44,22 @@ export class Game {
 
 
         //requestAnimationFrame(this.cycle)
+        Sound.setup(["remove", "wood1", "wood2"]);
         this.cycle()
 
         let container = document.createElement("div")
         document.body.appendChild(container)
         container.classList.add("container")
+
+        let container2 = document.createElement("div")
+        document.body.appendChild(container2)
+        container2.classList.add("container2")
+
+        // let showUi = document.createElement("button")
+        // container2.appendChild(showUi)
+        // showUi.innerHTML ="Edit Mode"
+        // showUi.classList.add("uI")
+        // showUi.addEventListener("click",()=>{this.toggleMode();showUi.innerHTML = this.editMode?"Game Mode":"Edit Mode"})
 
         let button= document.createElement("button")
         button.classList.add("btn")
@@ -94,8 +107,13 @@ export class Game {
         // removeButton.innerHTML ="Remove Spring"
         // document.body.appendChild(removeButton)
         // removeButton.addEventListener("click", ()=>this.removeSelectedSpring() )
+    
+        let modes = document.createElement("button")
+        modes.classList.add("modeBtn")
+        modes.innerHTML = "Edit Mode"
+        container2.appendChild(modes)
+        modes.addEventListener("click",()=>{this.toggleMode(this);modes.innerHTML = this.editMode?"Game Mode":"Edit Mode"})
     }   
-
     removeSelectedSpring(e:KeyboardEvent){
         console.log(`key pressed: ${e.key}`)
         if(this.selectedSpring && e.key == "Delete"){
@@ -104,6 +122,8 @@ export class Game {
             let springsIndex = this.selectedSpring.index
             this.springs.splice(springsIndex,1)
             this.selectedSpring = null
+            
+            Sound.play("remove", 0.1);
         }
     }
 
@@ -157,6 +177,20 @@ export class Game {
         
         
         console.log("gravity"+ this.gravityOn)
+    }
+
+     toggleMode(game:Game){
+        this.editMode=!this.editMode
+        const targetContainer = document.getElementsByTagName("div")[0]
+        
+        if(this.editMode == true){
+            targetContainer.style.display = "none"
+            console.log("true: Game Mode"); 
+            // game.drawGrid(1) == null
+        } else {    
+            targetContainer.style.display = "flex"
+            console.log("false: Edit Mode");
+        }
     }
 
     massAtPoint(p:Vector){
@@ -229,7 +263,10 @@ export class Game {
             this.downMass=map
         }
         else{
-            this.downMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0))//, new Vector(0,0))
+            this.downMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0))
+            Sound.play("wood1", 0.1);
+            
+            //, new Vector(0,0))
             //this.masses.push(this.downMass)
             // this.springs.push(new Spring(0.1,this.downMass!,this.downMass))
 
@@ -245,7 +282,10 @@ export class Game {
             this.upMass=map
         }
         else{
-            this.upMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0)) //new Vector(0,0))
+            this.upMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0)) 
+            Sound.play("wood2", 0.1);
+            
+            //new Vector(0,0))
             //this.masses.push(this.upMass)
         }
         if (this.downMass != this.upMass){
@@ -286,6 +326,16 @@ export class Game {
         
     }
 }
+
+// changeMode(){
+//     this.mode = (this.mode + 1)%2
+//     if (this.mode === 0){
+//         (<HTMLInputElement>document.querySelector(".modeBtn")).value= "Edit Mode"
+//     }
+//     if (this.mode === 1){
+//         (<HTMLInputElement>document.querySelector(".modeBtn")).value= "Play Mode"
+//     }
+// }
 
 reset(){
     this.masses = []

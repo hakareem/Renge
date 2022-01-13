@@ -14,7 +14,6 @@ canvas {
 				border: 3px solid rgb(26, 29, 190);
 				/* position: absolute; */
 				left: 20%;
-				/* bottom: 5%;  */
 			}
 	.container{
 				position: absolute;
@@ -22,13 +21,135 @@ canvas {
 				right: 20px;
 				justify-content: space-evenly;
 	}
+	.container2{
+		position: absolute;
+		top: 30px;
+		left: 20px;
+		justify-content: space-evenly;
+	}
 
-			.btn,.restart,.undo,.save,.load,.remove-spring {
-				background-color: rgb(255, 253, 253);
-				color: rgb(5, 5, 5);
-				border-radius: 5px;
+			.btn,.save,.remove-spring,.uI {
+				font-weight: 700;
+				color: #7dc21e;
+				border-color: white;
+				background: white;
+				background: white;
+				font-size: 10px;
+				border-color: #1172c4;
+				border-style: solid;
+				border-width: 2px;
+				border-radius: 22px;
+				padding: 10px 10px;
+				text-transform: uppercase;
 			}
 
-		.btn:hover,.restart:hover,.undo:hover,.load:hover,.save:hover,.remove-spring:hover{
-			background-color: rgba(22, 175, 189, 0.952);
+		.btn:hover,.save:hover,.remove-spring:hover,.uI:hover{
+			color: white;
+			background: #7dc21e;
+			border-color: white;
+		}
+
+		.restart{
+			font-weight: 700;
+			color: #c21e91;
+			border-color: #7dc21e;
+			background: transparent;
+			background: white;
+			font-size: 10px;
+			border-color: #1172c4;
+			border-style: solid;
+			border-width: 2px;
+			border-radius: 22px;
+			padding: 10px 10px;
+			text-transform: uppercase;
+		}
+
+		.restart:hover{
+			color: white;
+   background: #c21eb4;
+   border-color: #fafafa;
+		}
+
+		.undo{
+		font-weight: 700;
+		color: #664e96;
+		border-color: #664e96;
+		background: transparent;
+		background: white;
+		font-size: 10px;
+		border-color: #1172c4;
+		border-style: solid;
+		border-width: 2px;
+		border-radius: 22px;
+		padding: 10px 10px;
+		text-transform: uppercase;
+		}
+
+		.undo:hover{
+  color: white;
+  background: #664e96;
+  border-color: #ffffff;
+		}
+
+.load{
+	font-weight: 700;
+	color: #4bb9bd;
+	border-color: white;
+	background: white;
+	font-size: 10px;
+	border-color: #1172c4;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 22px;
+	padding: 10px 10px;
+	text-transform: uppercase;
+}
+		.load:hover{
+			color: white;
+			background: #4bb9bd;
+			border-color: white;
+		}
+
+		.save{
+		font-weight: 700;
+		color: #da0707;
+		border-color: white;
+		background: white;
+		font-size: 10px;
+		border-color: #1172c4;
+		border-style: solid;
+		border-width: 2px;
+		border-radius: 22px;
+		padding: 10px 10px;
+		text-transform: uppercase;
+		}
+
+			.save:hover{
+			color: white;
+			background: #b93514;
+			border-color: white;
+		}
+
+
+
+
+
+		.modeBtn{
+		font-weight: 700;
+		color: #1030bd;
+		border-color: white;
+		background: white;
+		font-size: 10px;
+		border-color: #1172c4;
+		border-style: solid;
+		border-width: 2px;
+		border-radius: 22px;
+		padding: 10px 10px;
+		text-transform: uppercase;
+		}
+
+		.modeBtn:hover{
+			color: white;
+			background: #1a08bd;
+			border-color: white;
 		}
