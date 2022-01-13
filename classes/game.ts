@@ -108,7 +108,12 @@ export class Game {
         // for(let i=0;i<this.level.length;i++){
             
         // }
-
+        let loadLabel= document.createElement("label")
+        loadLabel.setAttribute("for","hard")
+        loadLabel.innerHTML="Choose a Level:"
+        loadLabel.setAttribute("class","loadLabel")
+        container.appendChild(loadLabel)
+        
         let hard=document.createElement("select")
         hard.setAttribute("name","select")
         hard.setAttribute("id","hard")

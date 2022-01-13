@@ -153,3 +153,9 @@ canvas {
 			background: #1a08bd;
 			border-color: white;
 		}
+
+.loadLabel{
+	color:white;
+
+	font-family:sans-serif;
+}		
