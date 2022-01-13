@@ -40,6 +40,7 @@ export class Game {
         this.canvas.addEventListener('mousemove',(e) => this.mouseMove(e))
         window.addEventListener('keydown',(e)=> this.removeSelectedSpring(e))
         //requestAnimationFrame(this.cycle)
+        Sound.setup(["remove", "wood1", "wood2"]);
         this.cycle()
 
         let container = document.createElement("div")
@@ -109,7 +110,6 @@ export class Game {
         container2.appendChild(modes)
         modes.addEventListener("click",()=>{this.toggleMode(this);modes.innerHTML = this.editMode?"Game Mode":"Edit Mode"})
     }   
-
     removeSelectedSpring(e:KeyboardEvent){
         console.log(`key pressed: ${e.key}`)
         if(this.selectedSpring && e.key == "Delete"){
@@ -118,7 +118,8 @@ export class Game {
             let springsIndex = this.selectedSpring.index
             this.springs.splice(springsIndex,1)
             this.selectedSpring = null
-            //  Sound.play("soundFall", 0.01);
+            
+            Sound.play("remove", 0.1);
         }
     }
 
@@ -250,7 +251,10 @@ export class Game {
             this.downMass=map
         }
         else{
-            this.downMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0))//, new Vector(0,0))
+            this.downMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0))
+            Sound.play("wood1", 0.1);
+            
+            //, new Vector(0,0))
             //this.masses.push(this.downMass)
             // this.springs.push(new Spring(0.1,this.downMass!,this.downMass))
 
@@ -266,7 +270,10 @@ export class Game {
             this.upMass=map
         }
         else{
-            this.upMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0)) //new Vector(0,0))
+            this.upMass = new Mass(this,new Vector(e.clientX, e.clientY), new Vector(0,0)) 
+            Sound.play("wood2", 0.1);
+            
+            //new Vector(0,0))
             //this.masses.push(this.upMass)
         }
         if (this.downMass != this.upMass){

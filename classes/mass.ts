@@ -16,12 +16,28 @@ constructor(game:Game,position: Vector, velocity: Vector){ //target: Vector){
  game.masses.push(this)
 }
 
+highlight = new Array(
+    Math.round(Math.random() * 255),
+    Math.round(Math.random() * 255),
+    Math.round(Math.random() * 255)
+);
 draw(game:Game){
- game.ctx?.beginPath()
- game.ctx?.arc(this.position.x,this.position.y,game.massRadius,0,2 * Math.PI)
- game.ctx!.fillStyle = "green"
- game.ctx?.fill()
- game.ctx?.closePath()
+    game.ctx?.beginPath()
+    game.ctx?.arc(this.position.x,this.position.y,game.massRadius,0,2 * Math.PI)
+    //  game.ctx!.fillStyle = "green"
+    //  game.ctx?.fill()
+    game.ctx.lineWidth = (1 + 1) * 3 ;
+    game.ctx.strokeStyle = "#000000";
+    game.ctx.strokeStyle =
+        "rgba(" +
+        this.highlight[0] +
+        "," +
+        this.highlight[1] +
+        "," +
+        this.highlight[2] +
+        ",0.5)";
+    game.ctx.stroke();
+    game.ctx?.closePath()
 }
 
 move(game:Game){
