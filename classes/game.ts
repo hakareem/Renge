@@ -25,7 +25,9 @@ export class Game {
     ground = 700
     mouseCoords = new Vector(0, 0)
     selectedSpring: Spring | null = null 
-    levels:string[]=["Pyramid","Tank", "Rocket","Bridge", "Tower"]
+    hardLevels:string[]=["Tank", "Bridge", "Tower","Boat","Egg","Rocket","Building","Pyramid","Octagon","Fish"]
+    easy:string[]=[]
+    medium:string[]=[]
     
     
     massPics: string[] = [];
@@ -126,26 +128,33 @@ export class Game {
         loadInput.placeholder="Load Level Name"
         container.appendChild(loadInput)
 
+
         // this.level=["pyramid","tank"]
 
         // for(let i=0;i<this.level.length;i++){
             
         // }
 
-        let dd=document.createElement("select")
-        dd.setAttribute("name","select")
-        dd.setAttribute("id","dd")
-        dd.setAttribute("size","1")
-        container.appendChild(dd)
+        let hard=document.createElement("select")
+        hard.setAttribute("name","select")
+        hard.setAttribute("id","hard")
+        hard.setAttribute("size","1")
+        container.appendChild(hard)
 
-        this.levels
-        for(let i=0;i<this.levels.length;i++){
+        this.hardLevels
+        for(let i=0;i<this.hardLevels.length;i++){
             let option= document.createElement("option")
-            option.setAttribute("value",this.levels[i])
+            option.setAttribute("value",this.hardLevels[i])
             option.setAttribute("selected","selected")
-            option.innerHTML=this.levels[i]
-            dd.appendChild(option)
+            option.innerHTML=this.hardLevels[i]
+            hard.appendChild(option)
         }
+
+        // let medium=document.createElement("select")
+        // medium.setAttribute("name","select")
+        // medium.setAttribute("id","medium")
+        // medium.setAttribute("size","1")
+        // container.appendChild(medium)
 
 
         // for(let type in this.levels){
@@ -229,9 +238,9 @@ export class Game {
         // let dataString:string|null=localStorage.getItem((<HTMLInputElement>document.getElementById("loadInput")).value)
         // let loaded:Game= JSON.parse(dataString!) //you now need to remake springs and masses based on the loaded data
         
-        let levelName=(<HTMLSelectElement>document.getElementById("dd")).value
-        console.log(levelName)
-        let loaded:Game=await this.fetchObject(`levels/${levelName}.json`)
+        let hardLevels=(<HTMLSelectElement>document.getElementById("hard")).value
+        console.log(hardLevels)
+        let loaded:Game=await this.fetchObject(`levels/${hardLevels}.json`)
         this.masses=[]
         this.springs=[]
         for (let i=0;i<loaded.masses.length;i++){
