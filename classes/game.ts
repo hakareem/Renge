@@ -63,8 +63,11 @@ export class Game {
         setInterval(()=>{
             for(let i=0 ; i< 5; i++){
                 this.stretchSprings();
-                this.moveMasses() 
+                this.moveMasses()
+                this.applyDrag()
             }
+            this.applyGravity()
+           // this.applyDrag()
         }, 10)
 
 
@@ -289,7 +292,7 @@ export class Game {
      
         for (let i=0;i<loaded.springs.length;i++){
             console.log(loaded.springs[i])
-            this.springs.push(new Spring(this,0.1,this.masses[loaded.springs[i].a.index],this.masses[loaded.springs[i].b.index]))
+            this.springs.push(new Spring(this,this.masses[loaded.springs[i].a.index],this.masses[loaded.springs[i].b.index]))
         }
     }
 
@@ -393,11 +396,11 @@ export class Game {
         this.gameOver = true
         for (let i=0;i<this.masses.length;i++){
             this.masses[i].draw(this)
-            this.masses[i].move(this)
-            if(this.gravityOn){
-                this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
-                this.masses[i].velocity.multiplyIn(0.97)
-            }
+            // this.masses[i].move(this)
+            // if(this.gravityOn){
+            //     this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
+            //     this.masses[i].velocity.multiplyIn(0.97)
+            // }
             if(this.masses[i].position.y < 450){
             this.gameOver = false
 
@@ -448,7 +451,27 @@ export class Game {
         }
     }
 
+    applyGravity(){
+        for (let i=0;i<this.masses.length;i++){
+            
+            if(this.gravityOn){
+                this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
+                
+            }
+        }
+    }
 
+    applyDrag(){
+        for (let i=0;i<this.masses.length;i++){
+           
+           
+               
+                this.masses[i].velocity.multiplyIn(0.99)
+            // if(this.masses[i].velocity.length()<0.1){
+            //     this.masses[i].velocity=new Vector(0,0)
+            // }
+        } 
+    }
     drawMasses(){
         this.ctx.lineWidth = 1 ;
         
@@ -515,7 +538,7 @@ export class Game {
         if (this.downMass != this.upMass){
         
 
-            this.springs.push( new Spring(this,0.1,this.downMass!,this.upMass))
+            this.springs.push( new Spring(this,this.downMass!,this.upMass))
         }
         }
 

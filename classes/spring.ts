@@ -9,15 +9,15 @@ export class Spring{
     // m1:Mass 
     // m2:Mass 
     
-    k:number=0.1
+    k:number=0.05  //this is the spring constant too big and the model is unstable and too small and the model is not stiff enough   0.1 is a good start point
     restLength:number=0
     broken: boolean = false
     index:number = 0
 
-    constructor(game:Game,k:number,public a:Mass, public b:Mass){
+    constructor(game:Game,public a:Mass, public b:Mass){
 
         
-        this.k=k
+       
         this.restLength= this.a.position.distanceFrom(this.b.position)
         // this.index = game.springs.length
     }
@@ -35,9 +35,11 @@ export class Spring{
 
             this.a.velocity.addIn(direction.multiply(-1))
         }
+       // else{this.a.velocity=new Vector(0,0)}
         if (this.b.position.y<game.ground){
             this.b.velocity.addIn(direction)
         }
+        //else{this.b.velocity=new Vector(0,0)}
     }
 
     get length(){
