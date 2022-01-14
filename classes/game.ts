@@ -122,21 +122,21 @@ export class Game {
         container.appendChild(restart)
         restart.addEventListener("click", ()=>this.reset() )
 
-        let saveInput= document.createElement("input")
-        saveInput.id="saveInput"
-        saveInput.placeholder="Save Level Name"
-        container.appendChild(saveInput)
+        // let saveInput= document.createElement("input")
+        // saveInput.id="saveInput"
+        // saveInput.placeholder="Save Level Name"
+        // container.appendChild(saveInput)
 
-        let saveButton = document.createElement("button")
-        saveButton.classList.add("save")
-        saveButton.innerHTML ="Save Level"
-        container.appendChild(saveButton)
-        saveButton.addEventListener("click", ()=>this.saveLevel() )
+        // let saveButton = document.createElement("button")
+        // saveButton.classList.add("save")
+        // saveButton.innerHTML ="Save Level"
+        // container.appendChild(saveButton)
+        // saveButton.addEventListener("click", ()=>this.saveLevel() )
 
-        let loadInput = document.createElement("input")
-        loadInput.id="loadInput"
-        loadInput.placeholder="Load Level Name"
-        container.appendChild(loadInput)
+        // let loadInput = document.createElement("input")
+        // loadInput.id="loadInput"
+        // loadInput.placeholder="Load Level Name"
+        // container.appendChild(loadInput)
 
 
         // this.level=["pyramid","tank"]
@@ -239,9 +239,9 @@ export class Game {
     }
 
     drawScore(){
-        this.ctx.font = "20px Ariel"
+        this.ctx.font = "20px sans serif"
         // this.ctx.scale (50,100)
-        this.ctx.fillStyle = "White"
+        this.ctx.fillStyle = "black"
         this.ctx.fillText("Score: " + this.score,20,100)
         this.ctx.stroke()
         console.log("score++");
