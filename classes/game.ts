@@ -365,8 +365,8 @@ export class Game {
         // this.ctx.strokeStyle = "rgba(0,0,100,0.8)"
         this.ctx.strokeStyle = "purple"
         this.ctx.beginPath();
-        this.ctx.moveTo(0, 450);
-        this.ctx.lineTo(this.canvas.width, 450);
+        this.ctx.moveTo(0, 650);
+        this.ctx.lineTo(this.canvas.width, 650);
         this.ctx.stroke();
     
     };
@@ -374,7 +374,7 @@ export class Game {
 
     cycle(){
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
-        this.ctx.fillStyle = "red"
+        this.ctx.fillStyle = "orange"
         this.ctx.fillRect(0,this.ground,this.canvas.width, this.canvas.height)
         if(this.editMode == false){
         this.drawGrid(this.ground / 7);
@@ -386,7 +386,7 @@ export class Game {
         // this.moveMasses() //this also does gravity and drag
         
         if(this.selectedSpring){
-            this.ctx.strokeStyle="cyan"
+            this.ctx.strokeStyle="yellow"
             this.ctx.beginPath()
             this.ctx.moveTo(this.selectedSpring?.a.position.x, this.selectedSpring?.a.position.y)
             this.ctx.lineTo(this.selectedSpring?.b.position.x, this.selectedSpring?.b.position.y)
@@ -401,7 +401,7 @@ export class Game {
             //     this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
             //     this.masses[i].velocity.multiplyIn(0.97)
             // }
-            if(this.masses[i].position.y < 450){
+            if(this.masses[i].position.y < 650){
             this.gameOver = false
 
             }
