@@ -31,6 +31,7 @@ export class Game {
     
     gameOver: boolean = false
     massPics: string[] = [];
+    score: number = 0
 
 
     constructor(width:number,height:number){
@@ -194,6 +195,12 @@ export class Game {
         container2.appendChild(modes)
         modes.addEventListener("click",()=>{this.toggleMode(this);modes.innerHTML = this.editMode?"Game Mode":"Edit Mode"})
 
+        
+        // let score = document.createElement("h1")
+        // score.classList.add("score")
+        // container2.appendChild(score)
+        // score.innerHTML = "Score: "
+
         let loser = document.createElement("div")
         document.body.appendChild(loser)
         loser.classList.add("loser")
@@ -231,7 +238,15 @@ export class Game {
     
     }
 
-
+    drawScore(){
+        this.ctx.font = "20px Ariel"
+        // this.ctx.scale (50,100)
+        this.ctx.fillStyle = "White"
+        this.ctx.fillText("Score: " + this.score,20,100)
+        this.ctx.stroke()
+        console.log("score++");
+        
+    }
     removeSelectedSpring(e:KeyboardEvent){
         console.log(`key pressed: ${e.key}`)
         if(this.selectedSpring && e.key == "Delete"){
@@ -244,7 +259,7 @@ export class Game {
             this.selectedSpring.broken = true
             this.selectedSpring = null
             console.log(`The spring array is: ${this.springs.length}`)
-            
+            this.score = this.score+150
             Sound.play("removeSpring", 0.1);
         }
     }
@@ -382,6 +397,7 @@ export class Game {
         this.loserLine()
         this.drawMasses()
         this.drawSprings()
+        this.drawScore()
         // this.stretchSprings()
         // this.moveMasses() //this also does gravity and drag
         
