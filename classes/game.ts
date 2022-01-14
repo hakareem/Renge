@@ -258,7 +258,7 @@ export class Game {
             // this.springs.splice(springsIndex,1)
             this.selectedSpring.broken = true
             
-            this.score = (this.score + Math.abs(this.selectedSpring.tension - 1) * 1000) + 150
+            this.score = (this.score + (Math.ceil(Math.abs(this.selectedSpring.tension - 1) * 10000) + 150)*100)
             this.selectedSpring = null
             console.log(`The spring array is: ${this.springs.length}`)
             // this.score = (this.score + Math.abs(this.selectedSpring!.tension - 1) * 100) + 150

@@ -55,13 +55,13 @@ export class Spring{
         game.ctx.beginPath()
         game.ctx.lineWidth = 5
         game.ctx.lineCap  ="round"
-        let tension = this.length / this.restLength
-        if(tension > 1.23 || tension < 0.77){
+        this.tension = this.length / this.restLength
+        if(this.tension > 1.23 || this.tension < 0.77){
             this.broken = true 
             // console.log("spring broken");
             
         } 
-        let color = `rgb(${128 + Math.ceil(tension- 1) * 200},0,255)`
+        let color = `rgb(${128 + Math.ceil(this.tension- 1) * 200},0,255)`
         // console.log(color);
         game.ctx.strokeStyle = color
 
