@@ -248,7 +248,7 @@ export class Game {
         
     }
     removeSelectedSpring(e:KeyboardEvent){
-        console.log(`key pressed: ${e.key}`)
+        console.log(`key pressed: ${e.key} tension: ${this.selectedSpring!.tension}`)
         if(this.selectedSpring && e.key == "Delete"){
             console.log(`Deleted ${this.selectedSpring.index}`)
             
@@ -257,9 +257,11 @@ export class Game {
             let springsIndex = this.selectedSpring.index
             // this.springs.splice(springsIndex,1)
             this.selectedSpring.broken = true
+            
+            this.score = (this.score + Math.abs(this.selectedSpring.tension - 1) * 1000) + 150
             this.selectedSpring = null
             console.log(`The spring array is: ${this.springs.length}`)
-            this.score = this.score+150
+            // this.score = (this.score + Math.abs(this.selectedSpring!.tension - 1) * 100) + 150
             Sound.play("removeSpring", 0.1);
         }
     }

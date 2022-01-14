@@ -13,6 +13,7 @@ export class Spring{
     restLength:number=0
     broken: boolean = false
     index:number = 0
+    tension:number = 0
 
     constructor(game:Game,public a:Mass, public b:Mass){
 
@@ -46,29 +47,30 @@ export class Spring{
     return this.a.position.distanceFrom(this.b.position)
     }
 
+
     draw(game:Game){
-    if(this.broken){
-        return
+        if(this.broken){
+            return
+        }
+        game.ctx.beginPath()
+        game.ctx.lineWidth = 5
+        game.ctx.lineCap  ="round"
+        let tension = this.length / this.restLength
+        if(tension > 1.23 || tension < 0.77){
+            this.broken = true 
+            // console.log("spring broken");
+            
+        } 
+        let color = `rgb(${128 + Math.ceil(tension- 1) * 200},0,255)`
+        // console.log(color);
+        game.ctx.strokeStyle = color
+
+
+        //    game.ctx?.moveTo(game.downMass!,game.upMass)
+        game.ctx!.moveTo(this.a.position.x,this.a.position.y)
+        game.ctx!.lineTo(this.b.position.x,this.b.position.y)
+        game.ctx?.stroke()
     }
-    game.ctx.beginPath()
-    game.ctx.lineWidth = 5
-    game.ctx.lineCap  ="round"
-    let tension = this.length / this.restLength
-    if(tension > 1.23 || tension < 0.77){
-        this.broken = true 
-        // console.log("spring broken");
-        
-    } 
-    let color = `rgb(${128 + Math.ceil(tension- 1) * 200},0,255)`
-    // console.log(color);
-    game.ctx.strokeStyle = color
-
-
-    //    game.ctx?.moveTo(game.downMass!,game.upMass)
-    game.ctx!.moveTo(this.a.position.x,this.a.position.y)
-    game.ctx!.lineTo(this.b.position.x,this.b.position.y)
-    game.ctx?.stroke()
-}
 
     outsideBox(p:Vector){
         if(p.x > this.a.position.x && p.x > this.b.position.x){             
