@@ -1,0 +1,298 @@
+@import url(https://fonts.googleapis.com/css?family=Finger+Paint);
+*{
+	box-sizing: border-box;
+	margin: 0;
+}
+
+html, body {
+				background-color: rgba(83, 229, 255, 0.959);
+				overflow: hidden;
+				/* display: block; */
+				 /* font: "Finger Paint"; */
+			}
+
+canvas {
+				border: 3px solid rgb(26, 29, 190);
+				/* position: absolute; */
+				/* left: 20%; */
+			}
+	.container{
+				position: absolute;
+				top: 20px;
+				right: 20px;
+				justify-content: space-evenly;
+	}
+	.container2{
+		position: absolute;
+		top: 30px;
+		left: 20px;
+		justify-content: space-evenly;
+	}
+
+			.btn,.save,.remove-spring,.uI {
+				font-weight: 700;
+				color: #7dc21e;
+				border-color: white;
+				background: white;
+				background: white;
+				font-size: 20px;
+				border-color: #1172c4;
+				border-style: solid;
+				border-width: 2px;
+				border-radius: 22px;
+				padding: 15px 15px;
+				text-transform: uppercase;
+			}
+
+		.btn:hover,.save:hover,.remove-spring:hover,.uI:hover{
+			color: white;
+			background: #7dc21e;
+			border-color: white;
+		}
+
+		.restart{
+			font-weight: 700;
+			color: #c21e91;
+			border-color: #7dc21e;
+			background: transparent;
+			background: white;
+			font-size: 20px;
+			border-color: #1172c4;
+			border-style: solid;
+			border-width: 2px;
+			border-radius: 22px;
+			padding: 15px 15px;
+			text-transform: uppercase;
+		}
+
+		.restart:hover{
+			color: white;
+   background: #c21eb4;
+   border-color: #fafafa;
+		}
+
+		.undo{
+		font-weight: 700;
+		color: #664e96;
+		border-color: #664e96;
+		background: transparent;
+		background: white;
+		font-size: 20px;
+		border-color: #1172c4;
+		border-style: solid;
+		border-width: 2px;
+		border-radius: 22px;
+		padding: 15px 15px;
+		text-transform: uppercase;
+		}
+
+		.undo:hover{
+  color: white;
+  background: #664e96;
+  border-color: #ffffff;
+		}
+
+.load{
+	font-weight: 700;
+	color: #4bb9bd;
+	border-color: white;
+	background: white;
+	font-size: 20px;
+	border-color: #1172c4;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 22px;
+	padding: 15px 15px;
+	text-transform: uppercase;
+}
+		.load:hover{
+			color: white;
+			background: #4bb9bd;
+			border-color: white;
+		}
+
+		.save{
+		font-weight: 700;
+		color: #da0707;
+		border-color: white;
+		background: white;
+		font-size: 20px;
+		border-color: #1172c4;
+		border-style: solid;
+		border-width: 2px;
+		border-radius: 22px;
+		padding: 15px 15px;
+		text-transform: uppercase;
+		}
+
+			.save:hover{
+			color: white;
+			background: #b93514;
+			border-color: white;
+		}
+
+
+
+
+
+		.modeBtn{
+		font-weight: 700;
+		color: #1030bd;
+		border-color: white;
+		background: white;
+		font-size: 20px;
+		border-color: #1172c4;
+		border-style: solid;
+		border-width: 2px;
+		border-radius: 22px;
+		padding: 15px 15px;
+		text-transform: uppercase;
+		}
+
+		.modeBtn:hover{
+			color: white;
+			background: #1a08bd;
+			border-color: white;
+		}
+
+		.intro {
+			position: absolute;
+				top: 0px;
+				right: 0px;
+				bottom: 0px;
+				justify-content: space-evenly;
+				background-color: rgb(246, 244, 244);
+				z-index: 1;
+  	text-shadow: 0 0 80px rgba(255,255,255,.1);
+			width:100%;
+  height:110%;
+  background-size: calc(100% + 50px);
+}
+
+		.introBtn{
+			margin: 0;
+			position: absolute;
+			top: 50%;
+			left:50%;
+			-ms-transform: translateX(-50%) translateY(-50%);
+			transform: translateX(-50%) translateY(-50%);
+			width: 500px;
+			height: 100px;
+			background-color: rgb(253, 247, 247);
+			color: rgb(8, 8, 8);
+			z-index: 0;
+			border-radius:20px;
+		}
+		.introBtn:hover{
+			background-color: rgb(8, 226, 255);
+		}
+		.Text{
+			font-size: 75px;
+			font-family: fantasy;
+			color: white;
+			text-align: center;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 4vw;
+  font-weight: 900;
+  background: linear-gradient(
+    45deg,
+    #274fbd,
+    #01d8fd,
+    #14dfea,
+    #3fc12a,
+    #f9ac07,
+    #5406d9,
+    #e912a3,
+    #7a3bca,
+    #f9ac07,
+    #7a3bca
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 20s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+ 
+.loadLabel{
+	color:white;
+	
+	font-family:sans-serif;
+}		
+
+.loser {
+   position:absolute;
+    top: -20px;
+    right: -20px;
+    justify-content: space-evenly;
+    background-color: rgb(179, 18, 18);
+				color: black;
+    width: 105vw;
+    height: 105vh;
+    display:none;
+    z-index: 1;
+  	 text-shadow: 0 0 80px rgba(255,255,255,.5);
+				
+  }
+ 
+  .loserBtn{
+   margin: 0;
+   position: absolute;
+   top: 50%;
+   left:52%;
+   transform: translateX(-50%) translateY(-50%);
+   width: 400px;
+   height: 100px;
+   background-color: rgba(5, 5, 5, 0.719);
+   color: rgb(255, 251, 251);
+   /* z-index: 0; */
+   border-radius:20px;
+  }
+  .loserBtn:hover{
+   background-color: rgb(246, 243, 243);
+			color: black;
+  }
+  .write{
+   font-size: 75px;
+   font-family: fantasy;
+   color: white;
+   text-align: center;
+			text-transform: uppercase;
+   font-size: 5rem;
+  background-image:url("https://i.gifer.com/QeMS.gif");
+  /* background-size: 100%  ; */
+  /* background-position: top left; */
+		width: 100%;
+		height: 100%;
+  color: transparent;
+}
+
+.score{
+	color: white;
+	padding: 20px;
+	font-size: 20px;
+}
+#hard{
+	padding:15px;
+	font-size: 20px;
+	border-style: solid;
+	border-width:2px ;
+	border-radius:22px;
+	font-weight: 700;
+	color: #1030bd;
+	border-color: #1172c4;
+	text-transform: uppercase;
+}
+
