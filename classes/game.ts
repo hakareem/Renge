@@ -49,7 +49,7 @@ export class Game {
 
 
         //requestAnimationFrame(this.cycle)
-        Sound.setup(["remove", "wood1", "wood2", "switchMode", "removeSpring","gravityOn"]);
+        Sound.setup(["remove", "wood1", "wood2", "switchMode", "removeSpring","gravityOn","lost"]);
 
         let audio = document.createElement("audio")
         audio.src="music/two.mp3"
@@ -75,7 +75,7 @@ export class Game {
 
         let introBtn = document.createElement("button")
         introBtn.classList.add("introBtn")
-        introBtn.innerHTML = "Go to game"
+        introBtn.innerHTML = "Start Game"
         intro.appendChild(introBtn)
         introBtn.addEventListener("click", ()=>this.displayGame())
 
@@ -142,7 +142,7 @@ export class Game {
         // }
         let loadLabel= document.createElement("label")
         loadLabel.setAttribute("for","hard")
-        loadLabel.innerHTML="Choose a Level:"
+        loadLabel.innerHTML="Pick A Level:"
         loadLabel.setAttribute("class","loadLabel")
         container.appendChild(loadLabel)
         
@@ -192,13 +192,13 @@ export class Game {
         modes.addEventListener("click",()=>{this.toggleMode(this);modes.innerHTML = this.editMode?"Game Mode":"Edit Mode"})
 
         let loser = document.createElement("div")
-        container.appendChild(loser)
+        document.body.appendChild(loser)
         loser.classList.add("loser")
         loser.id = "loser"
  
         let loserBtn = document.createElement("button")
         loserBtn.classList.add("loserBtn")
-        loserBtn.innerHTML = "Go back to the game Loser."
+        loserBtn.innerHTML = "Continue"
         loser.appendChild(loserBtn)
         loserBtn.addEventListener("click",()=>this.hideLoser())
  
@@ -222,6 +222,8 @@ export class Game {
     hideLoser(){
         const targetCon = document.getElementById("loser")
         targetCon!.style.visibility = "hidden"
+            Sound.play("lost", 0.1);
+
         // this.loadLevel()
     
     }
@@ -358,7 +360,7 @@ export class Game {
 
        loserLine(){
         // this.ctx.strokeStyle = "rgba(0,0,100,0.8)"
-        this.ctx.strokeStyle = "red"
+        this.ctx.strokeStyle = "purple"
         this.ctx.beginPath();
         this.ctx.moveTo(0, 450);
         this.ctx.lineTo(this.canvas.width, 450);
@@ -398,10 +400,13 @@ export class Game {
             }
             if(this.masses[i].position.y < 450){
             this.gameOver = false
+
             }
         }
         if(this.gameOver && this.gravityOn){
+
             this.displayLoser()
+
         }
         // for (let i=0; i <this.springs.length;i++){
         //     this.springs[i].drawSpring(this)
@@ -445,7 +450,7 @@ export class Game {
 
 
     drawMasses(){
-        this.ctx.lineWidth = 3 ;
+        this.ctx.lineWidth = 1 ;
         
             this.ctx.beginPath()
         for (let i=0;i<this.masses.length;i++){
@@ -492,7 +497,6 @@ export class Game {
     }
     mouseUp(e:MouseEvent){
     if(this.editMode == false){
-
         this.mouseUpPoint= new Vector(e.clientX,e.clientY)
         this.isActive = false
         let map= this.massAtPoint(this.mouseUpPoint)

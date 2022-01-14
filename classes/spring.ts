@@ -49,7 +49,7 @@ export class Spring{
         return
     }
     game.ctx.beginPath()
-    game.ctx.lineWidth = 7
+    game.ctx.lineWidth = 5
     game.ctx.lineCap  ="round"
     let tension = this.length / this.restLength
     if(tension > 1.23 || tension < 0.77){
