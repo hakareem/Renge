@@ -22,20 +22,13 @@ highlight = new Array(
     Math.round(Math.random() * 255)
 );
 draw(game:Game){
+    
     game.ctx?.beginPath()
     game.ctx?.arc(this.position.x,this.position.y,game.massRadius,0,2 * Math.PI)
     //  game.ctx!.fillStyle = "green"
     //  game.ctx?.fill()
-    game.ctx.lineWidth = 2 ;
-    game.ctx.strokeStyle = "#000000";
-    game.ctx.strokeStyle =
-        "rgba(" +
-        this.highlight[0] +
-        "," +
-        this.highlight[1] +
-        "," +
-        this.highlight[2] +
-        ",0.5)";
+    game.ctx.lineWidth = 5 ;
+    game.ctx.strokeStyle ="blue"
     game.ctx.stroke();
     game.ctx?.closePath()
 }

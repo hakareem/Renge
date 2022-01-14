@@ -35,12 +35,12 @@ canvas {
 				border-color: white;
 				background: white;
 				background: white;
-				font-size: 10px;
+				font-size: 20px;
 				border-color: #1172c4;
 				border-style: solid;
 				border-width: 2px;
 				border-radius: 22px;
-				padding: 10px 10px;
+				padding: 15px 15px;
 				text-transform: uppercase;
 			}
 
@@ -56,12 +56,12 @@ canvas {
 			border-color: #7dc21e;
 			background: transparent;
 			background: white;
-			font-size: 10px;
+			font-size: 20px;
 			border-color: #1172c4;
 			border-style: solid;
 			border-width: 2px;
 			border-radius: 22px;
-			padding: 10px 10px;
+			padding: 15px 15px;
 			text-transform: uppercase;
 		}
 
@@ -77,12 +77,12 @@ canvas {
 		border-color: #664e96;
 		background: transparent;
 		background: white;
-		font-size: 10px;
+		font-size: 20px;
 		border-color: #1172c4;
 		border-style: solid;
 		border-width: 2px;
 		border-radius: 22px;
-		padding: 10px 10px;
+		padding: 15px 15px;
 		text-transform: uppercase;
 		}
 
@@ -97,12 +97,12 @@ canvas {
 	color: #4bb9bd;
 	border-color: white;
 	background: white;
-	font-size: 10px;
+	font-size: 20px;
 	border-color: #1172c4;
 	border-style: solid;
 	border-width: 2px;
 	border-radius: 22px;
-	padding: 10px 10px;
+	padding: 15px 15px;
 	text-transform: uppercase;
 }
 		.load:hover{
@@ -116,12 +116,12 @@ canvas {
 		color: #da0707;
 		border-color: white;
 		background: white;
-		font-size: 10px;
+		font-size: 20px;
 		border-color: #1172c4;
 		border-style: solid;
 		border-width: 2px;
 		border-radius: 22px;
-		padding: 10px 10px;
+		padding: 15px 15px;
 		text-transform: uppercase;
 		}
 
@@ -140,12 +140,12 @@ canvas {
 		color: #1030bd;
 		border-color: white;
 		background: white;
-		font-size: 10px;
+		font-size: 20px;
 		border-color: #1172c4;
 		border-style: solid;
 		border-width: 2px;
 		border-radius: 22px;
-		padding: 10px 10px;
+		padding: 15px 15px;
 		text-transform: uppercase;
 		}
 
@@ -228,7 +228,7 @@ canvas {
  
 .loadLabel{
 	color:white;
-
+	
 	font-family:sans-serif;
 }		
 
@@ -283,5 +283,16 @@ canvas {
 	color: white;
 	padding: 20px;
 	font-size: 20px;
+}
+#hard{
+	padding:15px;
+	font-size: 20px;
+	border-style: solid;
+	border-width:2px ;
+	border-radius:22px;
+	font-weight: 700;
+	color: #1030bd;
+	border-color: #1172c4;
+	text-transform: uppercase;
 }
 

@@ -32,7 +32,7 @@ export class Game {
     gameOver: boolean = false
     massPics: string[] = [];
     score: number = 0
-
+    loseLine:number=650
 
     constructor(width:number,height:number){
         this.canvas = document.createElement('canvas')
@@ -146,6 +146,7 @@ export class Game {
         // }
         let loadLabel= document.createElement("label")
         loadLabel.setAttribute("for","hard")
+        
         loadLabel.innerHTML="Pick A Level:"
         loadLabel.setAttribute("class","loadLabel")
         container.appendChild(loadLabel)
@@ -229,20 +230,20 @@ export class Game {
         const targetCon = document.getElementById("loser")
             targetCon!.style.display ="block"
     }
-    hideLoser(){
+    async hideLoser(){
         const targetCon = document.getElementById("loser")
         targetCon!.style.visibility = "hidden"
             Sound.play("lost", 0.1);
 
-        // this.loadLevel()
+        await this.loadLevel()
     
     }
 
     drawScore(){
-        this.ctx.font = "20px sans serif"
+        this.ctx.font = "30px sans serif"
         // this.ctx.scale (50,100)
         this.ctx.fillStyle = "black"
-        this.ctx.fillText("Score: " + this.score,20,100)
+        this.ctx.fillText("Score: " + this.score,30,120)
         this.ctx.stroke()
         console.log("score++");
         
@@ -300,6 +301,9 @@ export class Game {
         let loaded:Game=await this.fetchObject(`levels/${hardLevels}.json`)
         this.masses=[]
         this.springs=[]
+        if(loaded.loseLine)
+        {this.loseLine=loaded.loseLine}
+        
         for (let i=0;i<loaded.masses.length;i++){
             let m = loaded.masses[i]
             new Mass(this,Vector.create( m.position),Vector.create(m.velocity))  
@@ -379,9 +383,10 @@ export class Game {
        loserLine(){
         // this.ctx.strokeStyle = "rgba(0,0,100,0.8)"
         this.ctx.strokeStyle = "purple"
+        this.ctx.lineWidth=1
         this.ctx.beginPath();
-        this.ctx.moveTo(0, 650);
-        this.ctx.lineTo(this.canvas.width, 650);
+        this.ctx.moveTo(0, this.loseLine);
+        this.ctx.lineTo(this.canvas.width, this.loseLine);
         this.ctx.stroke();
     
     };
@@ -408,35 +413,24 @@ export class Game {
             this.ctx.lineTo(this.selectedSpring?.b.position.x, this.selectedSpring?.b.position.y)
             this.ctx.stroke()
         }
+        this.checkForGameOver()
 
-        this.gameOver = true
-        for (let i=0;i<this.masses.length;i++){
-            this.masses[i].draw(this)
-            // this.masses[i].move(this)
-            // if(this.gravityOn){
-            //     this.masses[i].velocity=this.masses[i].velocity.add(this.gravity)
-            //     this.masses[i].velocity.multiplyIn(0.97)
-            // }
-            if(this.masses[i].position.y < 650){
-            this.gameOver = false
-
-            }
-        }
-        if(this.gameOver && this.gravityOn){
-
-            this.displayLoser()
-
-        }
-        // for (let i=0; i <this.springs.length;i++){
-        //     this.springs[i].drawSpring(this)
-        //     this.springs[i].stretch(this)
- 
-        // }
-
+        
+            
         
     requestAnimationFrame(()=> this.cycle()) 
     }
-
+    checkForGameOver(){
+        this.gameOver = true
+        for (let i=0;i<this.masses.length;i++){
+            if(this.masses[i].position.y < this.loseLine){
+                this.gameOver = false
+            }
+        }
+        if(this.gameOver && this.gravityOn){
+            this.displayLoser()
+        }
+    }
     
      drawGrid(size:number) {
           
@@ -578,6 +572,9 @@ export class Game {
  
     mouseMove(e:MouseEvent){
         this.mouseCoords = new Vector(e.clientX,e.clientY)
+        if(this.mouseCoords.x<5){
+            this.loseLine=this.mouseCoords.y
+        }
         for (let j = 0; j < this.springs.length; j++){
             let s = this.springs[j]
             if(!s.broken){
@@ -589,6 +586,7 @@ export class Game {
                     this.selectedSpring = s
                     // this.springs.splice(1)
                 }
+
             }
         }
         
