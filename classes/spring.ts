@@ -2,7 +2,7 @@ import { Vector } from "./vector.js";
 import { Mass } from "./mass.js";
 import { Game } from "./game.js";
 
-
+ 
 
 export class Spring{
 
