@@ -7,7 +7,7 @@ This was a remarkable learning opportunity for me. I have worked on this project
 # Areas for improvement
 I have made some observations on what can be Improved. Some features to add include:
 
-• Improve Sound effects <br>
+• Improve Sound effects <br> ?
 • Add Wind / Earthquake <br>
 • Add Graphics  <br>
 • Support smaller screens <br>
